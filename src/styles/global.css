@@ -370,6 +370,22 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 .dgm-fill-surface { fill: var(--surface); }
 .dgm-fill-accent  { fill: var(--accent); }
 .dgm-stroke-accent{ stroke: var(--accent); }
+.dgm-fill-danger  { fill: var(--danger); }
+.dgm-stroke-danger{ stroke: var(--danger); }
+.dgm-fill-warn    { fill: var(--warn); }
+.dgm-stroke-warn  { stroke: var(--warn); }
+.dgm-mono { font-family: var(--font-mono); }
+
+/* gentle, purposeful diagram animation (disabled under reduced-motion above) */
+.dgm-flow {
+  stroke-dasharray: 5 5;
+  animation: dgm-dash .9s linear infinite;
+}
+@keyframes dgm-dash { to { stroke-dashoffset: -20; } }
+.dgm-pulse { animation: dgm-pulse 1.8s ease-in-out infinite; }
+@keyframes dgm-pulse { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+.dgm-pop { transform-box: fill-box; transform-origin: center; animation: dgm-pop 2.4s ease-in-out infinite; }
+@keyframes dgm-pop { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 
 /* ---------- Home / hero / cards ---------- */
 .hero { text-align: center; padding-top: 1rem; margin-bottom: 2.5rem; }

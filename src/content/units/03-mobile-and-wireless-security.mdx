@@ -7,6 +7,9 @@ topics: [Mobile challenges, Cryptography, Phone attacks, Bluetooth, Laptop virus
 ---
 
 import Callout from '../../components/Callout.astro';
+import MobileEncryption from '../../components/diagrams/MobileEncryption.astro';
+import BluetoothLadder from '../../components/diagrams/BluetoothLadder.astro';
+import MalwareMap from '../../components/diagrams/MalwareMap.astro';
 
 ## Security challenges posed by mobile devices
 
@@ -40,6 +43,8 @@ Smartphones and tablets push the security "perimeter" out into **public, persona
 - **TLS / HTTPS** — encrypts data *in transit* between apps and servers, blocking packet sniffing.
 - **Hardware-backed storage** — secure chips (Apple Secure Enclave, Android Titan M) isolate keys and biometric data from the main OS.
 
+<MobileEncryption />
+
 <Callout type="tip">
 **Real example:** Signal and WhatsApp use **End-to-End Encryption (E2EE)** — data is encrypted on the sender's device and only the recipient's private key can read it, so not even the provider can.
 </Callout>
@@ -70,6 +75,8 @@ Bluetooth is short-range wireless at **2.4 GHz**. Its discoverable modes and old
 | **Bluesnarfing** | Steals files, contacts, calendar, texts without consent | Severe |
 | **Bluebugging** | Takes full remote control of the phone's command set (calls, SMS, bugging) | Most dangerous |
 
+<BluetoothLadder />
+
 ### Safety measures
 
 Turn Bluetooth off when unused · use *discoverable* mode only when needed · pair only with trusted devices · keep firmware updated · reject unknown pairing requests.
@@ -84,6 +91,8 @@ Laptop malware is classified by **how it infects and spreads**.
 - **Resident virus** — loads into RAM and infects files as they open, staying active after the host app closes.
 - **File / direct-action virus** — attaches to executables and runs when the file runs.
 - **Multipartite virus** — infects both boot sector *and* files.
+
+<MalwareMap />
 
 ### Malware often confused with viruses
 

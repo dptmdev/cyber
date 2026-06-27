@@ -1,0 +1,35 @@
+---
+// Buffer overflow: oversized input spills past the buffer into the return address.
+const cells = [0, 1, 2, 3, 4, 5, 6, 7];
+---
+<figure class="figure">
+  <svg viewBox="0 0 450 210" role="img" aria-label="Normal input fits the buffer; oversized input overflows into the return address with shellcode">
+    <!-- expected -->
+    <text x="20" y="28" class="dgm-text" font-size="11.5" font-weight="650">Expected (fits)</text>
+    {cells.map((i) => (
+      <rect x={20 + i * 30} y="38" width="28" height="26" rx="3" class="dgm-fill-surface dgm-stroke" stroke-width="1.2"></rect>
+    ))}
+    <rect x={20 + 8 * 30 + 6} y="38" width="80" height="26" rx="3" class="dgm-fill-surface dgm-stroke" stroke-width="1.2"></rect>
+    <text x="140" y="80" text-anchor="middle" class="dgm-muted" font-size="10">8-char buffer</text>
+    <text x={20 + 8 * 30 + 46} y="80" text-anchor="middle" class="dgm-muted" font-size="10">return addr</text>
+
+    <!-- attack -->
+    <text x="20" y="124" class="dgm-text" font-size="11.5" font-weight="650">Attack (overflow)</text>
+    {cells.map((i) => (
+      <rect x={20 + i * 30} y="134" width="28" height="26" rx="3" class="dgm-fill-danger" opacity="0.85"></rect>
+    ))}
+    <rect x={20 + 8 * 30 + 6} y="134" width="80" height="26" rx="3" class="dgm-fill-danger"></rect>
+    <text x={20 + 8 * 30 + 46} y="151" text-anchor="middle" class="dgm-inv" font-size="9.5" font-weight="700">shellcode</text>
+    <line x1="248" y1="147" x2="266" y2="147" class="dgm-stroke-danger dgm-flow" stroke-width="2.4" marker-end="url(#bo-arrow)"></line>
+    <text x="140" y="178" text-anchor="middle" class="dgm-muted" font-size="10">500 chars sent…</text>
+    <text x={20 + 8 * 30 + 46} y="178" text-anchor="middle" class="dgm-muted" font-size="10">…overwrites the pointer</text>
+    <text x="225" y="198" text-anchor="middle" class="dgm-muted" font-size="10.5">→ program jumps to the attacker's code with its privileges</text>
+
+    <defs>
+      <marker id="bo-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0 0 L6 3 L0 6 z" class="dgm-fill-danger"></path>
+      </marker>
+    </defs>
+  </svg>
+  <figcaption>Input larger than the buffer spills into adjacent memory, overwriting the return address so the CPU runs the attacker's shellcode.</figcaption>
+</figure>

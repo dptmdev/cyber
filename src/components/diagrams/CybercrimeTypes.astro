@@ -1,0 +1,27 @@
+---
+// The three categories of cybercrime, branching from one root node.
+const cols = [
+  { x: 70,  head: 'Against individuals', items: ['Cyberstalking', 'Identity theft', 'Online fraud'] },
+  { x: 225, head: 'Against property',    items: ['Software piracy', 'IP theft', 'Unauthorized access'] },
+  { x: 380, head: 'Against govt / org',  items: ['Cyberterrorism', 'Infrastructure attacks'] },
+];
+---
+<figure class="figure">
+  <svg viewBox="0 0 450 250" role="img" aria-label="Cybercrime splits into three categories: against individuals, property, and government or organisations">
+    <!-- root -->
+    <rect x="170" y="14" width="110" height="34" rx="9" class="dgm-fill-accent"></rect>
+    <text x="225" y="36" text-anchor="middle" class="dgm-inv" font-size="13" font-weight="700">Cybercrime</text>
+
+    {cols.map((c) => (
+      <g>
+        <path d={`M225 48 C225 75, ${c.x} 60, ${c.x} 82`} fill="none" class="dgm-stroke-accent" stroke-width="1.6"></path>
+        <rect x={c.x - 62} y="82" width="124" height="34" rx="8" class="dgm-fill-surface dgm-stroke" stroke-width="1.4"></rect>
+        <text x={c.x} y="103" text-anchor="middle" class="dgm-text" font-size="11.5" font-weight="650">{c.head}</text>
+        {c.items.map((it, i) => (
+          <text x={c.x} y={138 + i * 19} text-anchor="middle" class="dgm-muted" font-size="11">· {it}</text>
+        ))}
+      </g>
+    ))}
+  </svg>
+  <figcaption>Cybercrime is usually classified by its victim: the individual, property, or the government / organisation.</figcaption>
+</figure>

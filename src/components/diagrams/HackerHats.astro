@@ -1,0 +1,25 @@
+---
+// Black / White / Grey hat hackers, by authorization & intent.
+const hats = [
+  { x: 75,  fill: '#3a3a3a', label: 'Black hat', sub: 'No permission,', sub2: 'harmful intent', tag: 'Illegal', tagClass: 'dgm-fill-danger' },
+  { x: 225, fill: '#cfd2d8', label: 'White hat', sub: 'Hired & authorized,', sub2: 'fixes flaws', tag: 'Legal', tagClass: 'dgm-fill-accent' },
+  { x: 375, fill: '#9aa0aa', label: 'Grey hat', sub: 'No permission,', sub2: 'no malice', tag: 'Ambiguous', tagClass: 'dgm-fill-warn' },
+];
+---
+<figure class="figure">
+  <svg viewBox="0 0 450 200" role="img" aria-label="Three kinds of hackers: black hat illegal, white hat legal, grey hat ambiguous">
+    {hats.map((h) => (
+      <g>
+        {/* simple hat glyph */}
+        <ellipse cx={h.x} cy="58" rx="38" ry="9" fill={h.fill} opacity="0.9"></ellipse>
+        <path d={`M${h.x - 24} 58 Q${h.x - 22} 30 ${h.x} 30 Q${h.x + 22} 30 ${h.x + 24} 58 Z`} fill={h.fill}></path>
+        <text x={h.x} y="86" text-anchor="middle" class="dgm-text" font-size="13" font-weight="700">{h.label}</text>
+        <text x={h.x} y="106" text-anchor="middle" class="dgm-muted" font-size="10.5">{h.sub}</text>
+        <text x={h.x} y="120" text-anchor="middle" class="dgm-muted" font-size="10.5">{h.sub2}</text>
+        <rect x={h.x - 38} y="136" width="76" height="22" rx="11" class={h.tagClass}></rect>
+        <text x={h.x} y="151" text-anchor="middle" class="dgm-inv" font-size="11" font-weight="700">{h.tag}</text>
+      </g>
+    ))}
+  </svg>
+  <figcaption>The difference is <strong>authorization + intent</strong>, not skill: white = permitted, black = malicious, grey = in between.</figcaption>
+</figure>

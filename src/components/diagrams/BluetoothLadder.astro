@@ -1,0 +1,25 @@
+---
+// Bluetooth attacks as a rising severity ladder.
+const rungs = [
+  { x: 30,  y: 150, label: 'Bluejacking',  desc: 'sends spam messages',        cls: 'dgm-fill-warn' },
+  { x: 165, y: 110, label: 'Bluesnarfing', desc: 'steals files & contacts',    cls: 'dgm-fill-accent' },
+  { x: 300, y: 70,  label: 'Bluebugging',  desc: 'full remote control',        cls: 'dgm-fill-danger' },
+];
+---
+<figure class="figure">
+  <svg viewBox="0 0 450 200" role="img" aria-label="Bluetooth attacks by severity: bluejacking, then bluesnarfing, then bluebugging">
+    <!-- severity arrow -->
+    <line x1="20" y1="185" x2="430" y2="185" class="dgm-stroke" stroke-width="1"></line>
+    <text x="20" y="178" class="dgm-muted" font-size="10">low severity</text>
+    <text x="430" y="178" text-anchor="end" class="dgm-muted" font-size="10">high severity →</text>
+
+    {rungs.map((r) => (
+      <g>
+        <rect x={r.x} y={r.y} width="120" height="44" rx="9" class={r.cls}></rect>
+        <text x={r.x + 60} y={r.y + 19} text-anchor="middle" class="dgm-inv" font-size="12.5" font-weight="700">{r.label}</text>
+        <text x={r.x + 60} y={r.y + 35} text-anchor="middle" class="dgm-inv" font-size="9.5">{r.desc}</text>
+      </g>
+    ))}
+  </svg>
+  <figcaption>Bluetooth threats escalate: <strong>Bluejacking</strong> (nuisance) → <strong>Bluesnarfing</strong> (data theft) → <strong>Bluebugging</strong> (total control).</figcaption>
+</figure>

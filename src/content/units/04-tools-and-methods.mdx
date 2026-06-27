@@ -8,6 +8,9 @@ topics: [Proxy servers, Password cracking, Trojans & backdoors, DoS/DDoS, SQL in
 
 import Callout from '../../components/Callout.astro';
 import DosVsDdos from '../../components/diagrams/DosVsDdos.astro';
+import ProxyChain from '../../components/diagrams/ProxyChain.astro';
+import SqlInjection from '../../components/diagrams/SqlInjection.astro';
+import BufferOverflow from '../../components/diagrams/BufferOverflow.astro';
 
 This unit is about **how** attacks are carried out — explain both the *meaning* and the *purpose* of each tool.
 
@@ -17,6 +20,8 @@ This unit is about **how** attacks are carried out — explain both the *meaning
 
 - **Mechanism:** the target logs the *proxy's* IP, not the attacker's. Criminals **chain** several proxies across countries so tracing is nearly impossible.
 - **Purpose in crime:** anonymity, and bypassing geo-restrictions / IP whitelists.
+
+<ProxyChain />
 
 <Callout type="tip">
 **Example:** a hacker in Russia routes through proxies in Brazil and Germany to attack a UK firm, making it look like the attack came from South America. A proxy isn't illegal in itself — it's suspicious only when used to hide crime.
@@ -75,6 +80,8 @@ They work together: a backdoor is embedded inside a Trojan; installing the Troja
 - **Impact:** bypass logins, read/alter confidential records, or dump the entire database (passwords, financial data).
 - **Prevention:** input validation, **parameterized queries**, least-privilege database accounts.
 
+<SqlInjection />
+
 <Callout type="tip">
 **Classic example:** entering `' OR '1'='1` in a login field. Because `1=1` is always true, the database is tricked into logging the attacker in without a valid password.
 </Callout>
@@ -86,6 +93,8 @@ They work together: a backdoor is embedded inside a Trojan; installing the Troja
 - **Mechanism:** in memory-unsafe languages (C/C++) without strict bounds checking, oversized input leaks into the program's instruction pointers.
 - **Exploitation:** the attacker crafts the overflow to contain **shellcode**, forcing the program to run the attacker's code with its privileges.
 - **Prevention:** secure coding, input-size checks, memory-safe practices, and patching.
+
+<BufferOverflow />
 
 <Callout type="tip">
 **Example:** a field expects an 8-character password; the attacker sends 500 carefully chosen characters that overwrite memory pointers and pop a command prompt with **admin privileges**.

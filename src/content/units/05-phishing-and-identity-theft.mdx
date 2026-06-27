@@ -7,6 +7,8 @@ topics: [Phishing methods, Identity theft, Online identity methods]
 ---
 
 import Callout from '../../components/Callout.astro';
+import PhishingFlow from '../../components/diagrams/PhishingFlow.astro';
+import IdentityTheftLifecycle from '../../components/diagrams/IdentityTheftLifecycle.astro';
 
 ## Phishing
 
@@ -21,6 +23,8 @@ import Callout from '../../components/Callout.astro';
 - **Smishing (SMS)** — fraudulent texts with fake links or urgent warnings.
 - **Website / clone phishing** — fake look-alike sites, or a real message copied and re-sent with a malicious link.
 
+<PhishingFlow />
+
 <Callout type="danger">
 **Real example (whaling):** an accountant gets an urgent email that looks like it's from the CEO demanding an immediate wire transfer to a vendor. They comply — only to find the address was subtly **spoofed**.
 </Callout>
@@ -34,6 +38,8 @@ import Callout from '../../components/Callout.astro';
 1. **Information acquisition** — gather PII via data breaches, phishing, dumpster diving, or buying stolen profiles on the dark web.
 2. **Exploitation (the fraud)** — open fraudulent accounts, take loans, claim tax refunds, or run up medical bills in the victim's name.
 3. **Consequences** — credit damage, legal trouble, and a long, costly process for the victim to clear their name.
+
+<IdentityTheftLifecycle />
 
 ### Types
 

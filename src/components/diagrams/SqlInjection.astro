@@ -1,0 +1,32 @@
+---
+// SQL injection: malicious input turns the query into an always-true condition.
+---
+<figure class="figure">
+  <svg viewBox="0 0 450 200" role="img" aria-label="A malicious login input makes the database query always true, bypassing the password check">
+    <!-- input box -->
+    <text x="90" y="28" text-anchor="middle" class="dgm-text" font-size="11.5" font-weight="650">Login input</text>
+    <rect x="20" y="38" width="140" height="30" rx="6" class="dgm-fill-surface dgm-stroke" stroke-width="1.4"></rect>
+    <text x="30" y="58" class="dgm-mono dgm-fill-danger" font-size="11">' OR '1'='1</text>
+
+    <!-- arrow to db -->
+    <line x1="160" y1="53" x2="250" y2="53" class="dgm-stroke-accent dgm-flow" stroke-width="2.2" marker-end="url(#sql-arrow)"></line>
+
+    <!-- database -->
+    <ellipse cx="330" cy="40" rx="40" ry="11" class="dgm-fill-surface dgm-stroke" stroke-width="1.5"></ellipse>
+    <path d="M290 40 v40 a40 11 0 0 0 80 0 v-40" fill="none" class="dgm-stroke" stroke-width="1.5"></path>
+    <path d="M290 40 a40 11 0 0 0 80 0" fill="none" class="dgm-stroke" stroke-width="1.5"></path>
+    <text x="330" y="100" text-anchor="middle" class="dgm-text" font-size="11.5" font-weight="650">Database</text>
+
+    <!-- query becomes -->
+    <rect x="20" y="110" width="410" height="56" rx="9" class="dgm-fill-surface dgm-stroke" stroke-width="1.2"></rect>
+    <text x="32" y="131" class="dgm-mono dgm-muted" font-size="10.5">SELECT * FROM users WHERE name='' OR <tspan class="dgm-fill-danger" font-weight="700">'1'='1'</tspan></text>
+    <text x="32" y="153" class="dgm-muted" font-size="10.5">→ condition is <tspan class="dgm-fill-danger" font-weight="700">always true</tspan> → login bypassed, admin access granted</text>
+
+    <defs>
+      <marker id="sql-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0 0 L6 3 L0 6 z" class="dgm-fill-accent"></path>
+      </marker>
+    </defs>
+  </svg>
+  <figcaption>Unsanitised input is read as <em>code</em>: <code>'1'='1'</code> is always true, so the database authenticates without a real password.</figcaption>
+</figure>
