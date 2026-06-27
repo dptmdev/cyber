@@ -1,42 +1,58 @@
 ---
 import { getCollection } from 'astro:content';
 
+interface Props {
+  active?: string;
+}
+const { active } = Astro.props;
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const units = (await getCollection('units')).sort((a, b) => a.data.order - b.data.order);
 
-// current path (strip trailing slash) for active highlighting
 const current = Astro.url.pathname.replace(/\/$/, '');
+const isHome = active === 'home' || current === base || current === '';
+const isRevision = active === 'quick-revision' || current === `${base}/quick-revision`;
+const unitActive = (id: string) => active === id || current === `${base}/units/${id}`;
 ---
 
-<aside class="sidebar" id="sidebar" aria-label="Units">
+<aside class="sidebar" id="sidebar" aria-label="Contents">
+  <a class="sidebar__brand" href={`${base}/`}>
+    <svg class="mark" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 2 4 5v6c0 4.5 3.2 8.4 8 11 4.8-2.6 8-6.5 8-11V5l-8-3Z" fill="currentColor" opacity="0.15"></path>
+      <path d="M12 2 4 5v6c0 4.5 3.2 8.4 8 11 4.8-2.6 8-6.5 8-11V5l-8-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path>
+      <path d="m8.5 12 2.4 2.4L15.8 9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <span>Cyber Law &amp; Ethics</span>
+  </a>
+
   <p class="sidebar__title">Syllabus units</p>
   <ul class="sidebar__nav">
     <li>
-      <a
-        class="sidebar__link"
-        href={`${base}/`}
-        aria-current={current === base || current === '' ? 'page' : undefined}
-      >
+      <a class="sidebar__link" href={`${base}/`} aria-current={isHome ? 'page' : undefined}>
         <span class="sidebar__num">·</span>
         <span>Overview</span>
       </a>
     </li>
     {
-      units.map((u) => {
-        const href = `${base}/units/${u.id}`;
-        return (
-          <li>
-            <a
-              class="sidebar__link"
-              href={href}
-              aria-current={current === href ? 'page' : undefined}
-            >
-              <span class="sidebar__num">{u.data.order}</span>
-              <span>{u.data.title}</span>
-            </a>
-          </li>
-        );
-      })
+      units.map((u) => (
+        <li>
+          <a
+            class="sidebar__link"
+            href={`${base}/units/${u.id}`}
+            aria-current={unitActive(u.id) ? 'page' : undefined}
+          >
+            <span class="sidebar__num">{u.data.order}</span>
+            <span>{u.data.title}</span>
+          </a>
+        </li>
+      ))
     }
+    <li><div class="sidebar__sep"></div></li>
+    <li>
+      <a class="sidebar__link" href={`${base}/quick-revision`} aria-current={isRevision ? 'page' : undefined}>
+        <span class="sidebar__num">⚡</span>
+        <span>Quick revision sheet</span>
+      </a>
+    </li>
   </ul>
 </aside>

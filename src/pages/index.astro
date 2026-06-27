@@ -4,18 +4,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const units = (await getCollection('units')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const first = units[0];
 const totalHours = units.reduce((sum, u) => sum + (u.data.lectureHours ?? 0), 0);
 ---
 
-<BaseLayout title="Cyber Law & Ethics">
+<BaseLayout title="Cyber Law & Ethics" active="home">
   <section class="hero">
     <p class="hero__eyebrow">OEC-CS801B · Open Elective</p>
-    <h1>Cyber Law &amp; Ethics — exam notes</h1>
+    <h1>Cyber Law &amp; Ethics</h1>
     <p class="hero__lead">
-      Simple, complete, exam-ready notes for the whole syllabus. Built to read comfortably
-      on a phone or a laptop, with light &amp; dark modes and small diagrams to make the
-      tricky bits click.
+      Clean, exam-focused study notes for the whole syllabus — simple language,
+      the details you need, and small diagrams to make the tricky concepts click.
     </p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href={`${base}/units/${first.id}`}>Start with Unit 1 →</a>
+      <a class="btn" href={`${base}/quick-revision`}>⚡ Quick revision sheet</a>
+    </div>
     <div class="hero__meta">
       <span class="chip">{units.length} units</span>
       <span class="chip">{totalHours} lecture hours</span>
@@ -23,6 +27,7 @@ const totalHours = units.reduce((sum, u) => sum + (u.data.lectureHours ?? 0), 0)
     </div>
   </section>
 
+  <h2 class="section-title">All units</h2>
   <nav class="unit-grid" aria-label="All units">
     {
       units.map((u) => (
@@ -38,19 +43,22 @@ const totalHours = units.reduce((sum, u) => sum + (u.data.lectureHours ?? 0), 0)
     }
   </nav>
 
-  <div class="hero" style="margin-top:3rem;">
+  <div class="content" style="margin-top:2.5rem;">
     <div class="callout callout--tip">
       <span class="callout__label">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M9 18h6 M10 22h4 M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"></path>
         </svg>
-        How to use these notes
+        How to use this site
       </span>
       <p style="margin:0;">
-        Each unit gives a clear <strong>definition</strong>, the <strong>key points</strong> to write,
-        a <strong>real example</strong>, and a green <strong>“exam focus”</strong> box with the lines
-        worth memorising. Skim the one-line answers at the end of each unit the night before.
+        Read a unit top-to-bottom for full understanding — each gives a clear
+        <strong>definition</strong>, the <strong>key points</strong> to write, a
+        <strong>real example</strong>, and a green <strong>“exam focus”</strong> box.
+        Then come back to the <a href={`${base}/quick-revision`}>Quick Revision Sheet</a>
+        the night before to lock it in. Use the menu (top-left on mobile) to jump between
+        units, and the 🌙 / ☀️ button to switch reading modes.
       </p>
     </div>
   </div>

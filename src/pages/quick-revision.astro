@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Quick Revision Sheet"
+  description="Last-minute one-line revision points for the whole Cyber Law & Ethics syllabus."
+  active="quick-revision"
+  progress
+>
+  <article class="content prose">
+    <header class="page-head">
+      <div class="tags">
+        <span class="tag">⚡ Revision</span>
+        <span class="tag tag--muted">whole syllabus</span>
+      </div>
+      <h1>Quick Revision Sheet</h1>
+      <p class="lede">
+        The night-before summary — one or two lines per topic. Read a unit fully first,
+        then use this to lock it in.
+      </p>
+    </header>
+
+    <h2>1 · Introduction to Cybercrime</h2>
+    <ul>
+      <li><strong>Cybercrime</strong> = illegal act where a computer/network is the <strong>target, weapon, or instrument</strong>. Categories: against individuals, property, government.</li>
+      <li>Traits: no boundaries, speed, anonymity, leaves digital footprints (needs forensics).</li>
+      <li><strong>Forgery</strong> = making/using fake digital documents or signatures to deceive — breaks <strong>Integrity</strong> (e.g. email spoofing).</li>
+      <li><strong>Hacking</strong> = unauthorized access. Hats: <strong>black</strong> (illegal), <strong>white</strong> (ethical/hired), <strong>grey</strong> (no permission, no malice).</li>
+      <li><strong>Software piracy</strong> = unlawful copying/use of copyrighted software (softlifting, internet piracy, hard-disk loading) — breaks IPR.</li>
+      <li><strong>Network intrusion</strong> = unauthorized entry into a network (“digital trespassing”); stopped by IDS/IPS.</li>
+    </ul>
+
+    <h2>2 · Categories of Cybercrime</h2>
+    <ul>
+      <li><strong>Attack planning</strong> (kill chain): reconnaissance → weaponize → deliver → exploit → maintain/cover tracks.</li>
+      <li><strong>Passive attack</strong> = only observes, data unchanged, very hard to detect → breaks <strong>Confidentiality</strong> (sniffing, traffic analysis).</li>
+      <li><strong>Active attack</strong> = alters/disrupts, leaves a trace → breaks <strong>Integrity &amp; Availability</strong> (spoofing, message modification, DoS).</li>
+      <li><strong>Cyberstalking</strong> = repeated online harassment/monitoring; includes <strong>doxxing</strong> and stalkerware; can escalate to real-world harm.</li>
+    </ul>
+
+    <h2>3 · Mobile &amp; Wireless Security</h2>
+    <ul>
+      <li><strong>Challenges</strong>: theft, public Wi-Fi, risky app permissions, OS fragmentation/unpatched devices.</li>
+      <li><strong>Crypto protection</strong>: full-disk encryption (FDE/FBE), TLS/HTTPS in transit, hardware key stores, E2EE (Signal/WhatsApp).</li>
+      <li><strong>Phone attacks</strong>: theft, malware/spyware, hacking (incl. zero-click, e.g. <strong>Pegasus</strong>).</li>
+      <li><strong>Bluetooth</strong>: <strong>Bluejacking</strong> (spam) → <strong>Bluesnarfing</strong> (steal data) → <strong>Bluebugging</strong> (full control).</li>
+      <li><strong>Laptop viruses</strong>: boot-sector, macro, polymorphic, resident, file, multipartite. Worm = self-spreads; Trojan = disguised; theft = physical vs hacking = digital.</li>
+    </ul>
+
+    <h2>4 · Tools &amp; Methods Used in Cybercrime</h2>
+    <ul>
+      <li><strong>Proxy server</strong> = hides real IP (chained to defeat tracing).</li>
+      <li><strong>Password checking</strong> = brute-force, dictionary, credential stuffing. <strong>Random checking</strong> = scanning random hosts for weaknesses.</li>
+      <li><strong>Trojan</strong> = disguised malware (needs user to run); <strong>backdoor</strong> = hidden re-entry bypassing login.</li>
+      <li><strong>DoS</strong> = flood from one source; <strong>DDoS</strong> = flood from a botnet (many sources, hard to filter).</li>
+      <li><strong>SQL injection</strong> = malicious SQL in inputs (classic <code>' OR '1'='1</code>); fix with parameterized queries.</li>
+      <li><strong>Buffer overflow</strong> = oversized input overwrites memory/instruction pointers to run shellcode; fix with bounds checks &amp; patches.</li>
+    </ul>
+
+    <h2>5 · Phishing &amp; Identity Theft</h2>
+    <ul>
+      <li><strong>Phishing</strong> = social engineering impersonating a trusted entity. Types: spear phishing, <strong>whaling</strong> (executives), vishing (voice), smishing (SMS), clone/website.</li>
+      <li><strong>Identity theft</strong> lifecycle: acquire PII → commit fraud → victim suffers credit/legal damage. Types: financial, medical, account takeover.</li>
+      <li><strong>Online methods</strong>: spoofing &amp; <strong>typosquatting</strong>, <strong>synthetic identity</strong> (real + fake data), social-media cloning.</li>
+      <li><strong>Prevention</strong>: never share OTP/PIN, check URLs, 2FA, unique strong passwords, updates.</li>
+    </ul>
+
+    <h2>6 · Cybercrime &amp; Cybersecurity (Legal)</h2>
+    <ul>
+      <li><strong>Legal challenges</strong>: jurisdiction (cross-border) &amp; admissibility of digital evidence (chain of custody). <strong>Budapest Convention</strong> = international cooperation.</li>
+      <li><strong>India</strong>: dual approach — IT Act (special) + IPC/BNS (general). Agencies: <strong>CERT-In</strong>, cyber police stations.</li>
+      <li><strong>IT Act 2000</strong> sections: <strong>43</strong> (damage → ₹1 crore), <strong>66</strong> (hacking → 3 yrs), <strong>66C/66D</strong> (identity theft/personation), <strong>66F</strong> (cyber terrorism → life), <strong>35</strong> (CCA licenses certifiers).</li>
+      <li><strong>Section 66A</strong> struck down in <strong>Shreya Singhal v. Union of India (2015)</strong>.</li>
+      <li><strong>Public Key Certificate (DSC)</strong> = CA-issued proof binding a public key to an identity. <strong>Private key signs, public key verifies</strong>; legally equals a handwritten signature.</li>
+    </ul>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 18h6 M10 22h4 M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"></path>
+        </svg>
+        You've got this
+      </span>
+      <p style="margin:0;">Read each unit fully at least once, then revise from this sheet. Good luck in the exam!</p>
+    </div>
+  </article>
+</BaseLayout>

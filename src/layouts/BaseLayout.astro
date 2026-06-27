@@ -1,24 +1,25 @@
 ---
 import '../styles/global.css';
-import Header from '../components/Header.astro';
 import Sidebar from '../components/Sidebar.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 
 interface Props {
   title: string;
   description?: string;
-  /** When true, render the unit sidebar + reading layout. */
-  withSidebar?: boolean;
-  /** Show the scroll-progress bar (content pages). */
+  /** Show the scroll-progress bar (reading pages). */
   progress?: boolean;
+  /** Active sidebar key: a unit id, 'home', or 'quick-revision'. */
+  active?: string;
 }
 
 const {
   title,
   description = 'Simple, exam-ready notes for Cyber Law and Ethics (OEC-CS801B). Built for clean reading on phone and desktop.',
-  withSidebar = false,
   progress = false,
+  active,
 } = Astro.props;
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const fullTitle =
   title === 'Cyber Law & Ethics'
     ? 'Cyber Law & Ethics — Exam Notes'
@@ -33,6 +34,8 @@ const fullTitle =
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#fbfbf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#15171c" media="(prefers-color-scheme: dark)" />
     <title>{fullTitle}</title>
 
     <!-- Set theme before paint to avoid a flash of the wrong theme -->
@@ -41,8 +44,7 @@ const fullTitle =
         try {
           const stored = localStorage.getItem('theme');
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const theme = stored ?? (prefersDark ? 'dark' : 'light');
-          document.documentElement.dataset.theme = theme;
+          document.documentElement.dataset.theme = stored ?? (prefersDark ? 'dark' : 'light');
         } catch (e) {
           document.documentElement.dataset.theme = 'light';
         }
@@ -50,61 +52,66 @@ const fullTitle =
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     {progress && <div class="progress" id="progress" aria-hidden="true"></div>}
-    <div class="site">
-      <Header />
-      {
-        withSidebar ? (
-          <div class="layout">
-            <div class="scrim" id="scrim" aria-hidden="true"></div>
-            <Sidebar />
-            <main class="main">
-              <div class="fade-in">
-                <slot />
-              </div>
-            </main>
+    <div class="scrim" data-close-nav aria-hidden="true"></div>
+
+    <div class="app">
+      <Sidebar active={active} />
+
+      <div class="main">
+        <header class="topbar">
+          <button class="icon-btn menu-btn" type="button" aria-label="Open contents menu" data-toggle-nav>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="4" y1="7" x2="20" y2="7"></line>
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <line x1="4" y1="17" x2="20" y2="17"></line>
+            </svg>
+          </button>
+
+          <a class="topbar__brand" href={`${base}/`}>
+            <svg class="mark" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2 4 5v6c0 4.5 3.2 8.4 8 11 4.8-2.6 8-6.5 8-11V5l-8-3Z" fill="currentColor" opacity="0.15"></path>
+              <path d="M12 2 4 5v6c0 4.5 3.2 8.4 8 11 4.8-2.6 8-6.5 8-11V5l-8-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path>
+              <path d="m8.5 12 2.4 2.4L15.8 9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <span class="title-text">Cyber Law &amp; Ethics</span>
+          </a>
+
+          <span class="topbar__spacer"></span>
+          <ThemeToggle />
+        </header>
+
+        <main class="main-inner" id="main-content">
+          <div class="fade-in">
+            <slot />
           </div>
-        ) : (
-          <main class="main">
-            <div class="fade-in">
-              <slot />
-            </div>
-          </main>
-        )
-      }
-      <footer class="footer">
-        <p>Cyber Law &amp; Ethics (OEC-CS801B) · Study notes for revision.</p>
-        <p>Based on the prescribed syllabus &amp; <em>Cyber Security</em> by Nina Godbole &amp; Sunit Belapure.</p>
-      </footer>
+        </main>
+
+        <footer class="footer">
+          <p>Cyber Law &amp; Ethics (OEC-CS801B) · Study notes for revision.</p>
+          <p>Based on the prescribed syllabus &amp; <em>Cyber Security</em> by Nina Godbole &amp; Sunit Belapure.</p>
+        </footer>
+      </div>
     </div>
 
-    <!-- Mobile menu + scroll progress -->
+    <!-- Mobile drawer + scroll progress -->
     <script is:inline>
       (() => {
-        const toggle = document.getElementById('nav-toggle');
-        const sidebar = document.getElementById('sidebar');
-        const scrim = document.getElementById('scrim');
-        const close = () => {
-          sidebar?.classList.remove('is-open');
-          scrim?.classList.remove('is-open');
-          toggle?.setAttribute('aria-expanded', 'false');
-        };
-        toggle?.addEventListener('click', () => {
-          const open = sidebar?.classList.toggle('is-open');
-          scrim?.classList.toggle('is-open', open);
-          toggle.setAttribute('aria-expanded', String(!!open));
-        });
-        scrim?.addEventListener('click', close);
+        const body = document.body;
+        const open = () => body.classList.add('nav-open');
+        const close = () => body.classList.remove('nav-open');
+        document.querySelectorAll('[data-toggle-nav]').forEach((b) => b.addEventListener('click', open));
+        document.querySelectorAll('[data-close-nav]').forEach((b) => b.addEventListener('click', close));
+        document.querySelectorAll('.sidebar a').forEach((a) => a.addEventListener('click', close));
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-        sidebar?.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
 
         const bar = document.getElementById('progress');
         if (bar) {
           const onScroll = () => {
             const h = document.documentElement;
             const max = h.scrollHeight - h.clientHeight;
-            const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
-            bar.style.width = pct + '%';
+            bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
           };
           document.addEventListener('scroll', onScroll, { passive: true });
           onScroll();

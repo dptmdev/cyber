@@ -19,14 +19,16 @@ const { Content } = await render(unit);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<BaseLayout title={unit.data.title} description={unit.data.summary} withSidebar progress>
+<BaseLayout title={unit.data.title} description={unit.data.summary} active={unit.id} progress>
   <article class="content prose">
-    <p class="hero__eyebrow">Unit {unit.data.order}{unit.data.lectureHours ? ` · ${unit.data.lectureHours} lectures` : ''}</p>
-    <h1 style="font-size: clamp(1.7rem, 5vw, 2.3rem); line-height:1.15; letter-spacing:-.02em; margin-top:.4rem;">
-      {unit.data.title}
-    </h1>
-    <p class="hero__lead" style="margin-top:.75rem;">{unit.data.summary}</p>
-    <hr />
+    <header class="page-head">
+      <div class="tags">
+        <span class="tag">Unit {unit.data.order}</span>
+        {unit.data.lectureHours && <span class="tag tag--muted">{unit.data.lectureHours} lectures</span>}
+      </div>
+      <h1>{unit.data.title}</h1>
+      <p class="lede">{unit.data.summary}</p>
+    </header>
     <Content />
   </article>
 
