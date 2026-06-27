@@ -1,0 +1,100 @@
+---
+title: Cybercrime & Cybersecurity — Legal Aspects
+order: 6
+lectureHours: 4
+summary: Legal aspects of cybercrime, Indian cyber laws, the IT Act 2000 and its key sections, and public key certificates.
+topics: [Legal aspects, Indian laws, IT Act 2000, Public key certificate]
+---
+
+import Callout from '../../components/Callout.astro';
+import PublicKeyFlow from '../../components/diagrams/PublicKeyFlow.astro';
+
+**Cybercrime** is illegal activity done with computers/networks; **cybersecurity** is protecting systems, networks, and data from those attacks. The two are linked — cybersecurity exists to stop or reduce cybercrime.
+
+## Legal aspects of cybercrime
+
+Cybercrime is not only a *technical* problem — it's a *legal* one. Traditional penal codes were written for physical assets, so cyber law provides a framework for **intangible digital property, electronic records, and borderless offences**.
+
+### Why cyber law is needed
+
+- To define what is illegal online.
+- To punish offenders and protect victims and data.
+- To regulate digital transactions and e-governance.
+- To set rules for collecting and using **electronic evidence**.
+
+### Key legal challenges
+
+1. **Jurisdiction** — crimes are often cross-border (a hacker in Europe hitting a target in Asia), so it's unclear which country's police can investigate.
+2. **Admissibility of evidence** — digital data is volatile and easily altered, so the law sets strict **chain-of-custody** standards for logs and drives to stand up in court.
+
+International frameworks like the **Budapest Convention** let member countries cooperate and share digital forensics across borders.
+
+## Indian cyber laws
+
+India uses a **dual approach**:
+
+1. **The IT Act (special law)** — handles electronic data, digital signatures, hacking, and platform regulation.
+2. **The IPC / BNS (general criminal law)** — traditional criminal law applied alongside cyber law (e.g. online forgery uses IPC provisions plus electronic-proof rules).
+
+**Key agencies:** **CERT-In** (Indian Computer Emergency Response Team), the national watchdog for cyber threats, and dedicated **Cyber Police Stations** across states.
+
+## The Information Technology Act, 2000
+
+**The IT Act, 2000 is India's primary law on cybercrime, e-commerce, and digital signatures.** It gives **legal recognition to electronic records, digital signatures, and e-governance**, and defines digital offences and penalties.
+
+### Frequently-tested sections
+
+| Section | What it covers |
+| :-- | :-- |
+| **43** | Penalty for damaging a computer/introducing viruses — compensation up to **₹1 crore** |
+| **66** | Hacking / computer-related fraud — up to **3 years** imprisonment |
+| **66C & 66D** | Identity theft and cheating by personation online |
+| **66F** | **Cyber terrorism** (threatening India's sovereignty/security) — up to **life imprisonment** |
+| **35** | Authorises the **Controller of Certifying Authorities (CCA)** to oversee digital-certificate issuers |
+
+### Notable amendments
+
+- The **2008 Amendment** expanded privacy protections and added many of the above sections.
+- **Section 66A** (criminalising "offensive" messages) was **struck down** by the Supreme Court in **_Shreya Singhal v. Union of India_ (2015)** for violating free speech.
+
+<Callout type="tip">
+Remember the headline numbers: **43 → ₹1 crore damage**, **66 → 3 years hacking**, **66F → life for cyber terrorism**, and the **Shreya Singhal (2015)** case that killed Section 66A.
+</Callout>
+
+## Public Key Certificate (PKC / Digital Signature Certificate)
+
+**A Public Key Certificate is an electronic credential, issued by a trusted third party, that mathematically binds a public key to the verified identity of its holder.** It lets people trust that a public key really belongs to the claimed person or organisation.
+
+### How it works (asymmetric cryptography)
+
+A pair of keys is used:
+
+- **Private key** — kept secret; used to **sign** documents.
+- **Public key** — shared openly; used by others to **verify** that signature.
+
+The certificate is issued and vouched for by a **Certifying Authority (CA)**.
+
+<PublicKeyFlow />
+
+### What a certificate contains
+
+Owner's name · the public key · expiry date · Certifying Authority details · the CA's digital signature.
+
+### Legal standing (under the IT Act)
+
+- **Section 35** lets the **Controller of Certifying Authorities (CCA)** license the companies that issue certificates.
+- A document signed with a valid Digital Signature Certificate has the **same legal validity as a handwritten signature** in an Indian court.
+
+<Callout type="tip">
+**Example:** a business owner files company documents on the MCA portal using a **DSC USB token**; the system validates it with the CA, proving identity without any physical meeting.
+</Callout>
+
+<Callout type="exam">
+**One-line answers**
+
+- **Cybersecurity:** protection of computers, networks, and data from attack.
+- **IT Act, 2000:** India's main law on electronic records and cyber offences.
+- **Jurisdiction problem:** difficulty deciding which country can prosecute a cross-border cybercrime.
+- **CERT-In:** India's national cyber-threat response agency.
+- **Public Key Certificate:** a CA-issued digital document proving a public key belongs to a specific person/organisation.
+</Callout>

@@ -1,0 +1,40 @@
+---
+// The CIA Triad — the three goals every security control protects,
+// and which attack type breaks which goal.
+---
+<figure class="figure">
+  <svg viewBox="0 0 420 300" role="img" aria-label="The CIA triad: Confidentiality, Integrity and Availability at the corners of a triangle">
+    <!-- triangle -->
+    <polygon points="210,40 380,260 40,260"
+      class="dgm-fill-surface dgm-stroke-accent" stroke-width="2"></polygon>
+
+    <!-- centre label -->
+    <text x="210" y="180" text-anchor="middle" class="dgm-muted" font-size="13" font-weight="600">Security</text>
+    <text x="210" y="197" text-anchor="middle" class="dgm-muted" font-size="13" font-weight="600">goals</text>
+
+    <!-- corner nodes -->
+    <g>
+      <circle cx="210" cy="40" r="22" class="dgm-fill-accent"></circle>
+      <text x="210" y="45" text-anchor="middle" class="dgm-inv" font-size="15" font-weight="700">C</text>
+      <text x="210" y="20" text-anchor="middle" class="dgm-text" font-size="13" font-weight="600">Confidentiality</text>
+      <text x="210" y="289" text-anchor="middle" class="dgm-muted" font-size="11"></text>
+    </g>
+    <g>
+      <circle cx="380" cy="260" r="22" class="dgm-fill-accent"></circle>
+      <text x="380" y="265" text-anchor="middle" class="dgm-inv" font-size="15" font-weight="700">I</text>
+      <text x="380" y="295" text-anchor="middle" class="dgm-text" font-size="13" font-weight="600">Integrity</text>
+    </g>
+    <g>
+      <circle cx="40" cy="260" r="22" class="dgm-fill-accent"></circle>
+      <text x="40" y="265" text-anchor="middle" class="dgm-inv" font-size="15" font-weight="700">A</text>
+      <text x="40" y="295" text-anchor="middle" class="dgm-text" font-size="13" font-weight="600">Availability</text>
+    </g>
+
+    <!-- broken-by tags -->
+    <text x="300" y="120" text-anchor="middle" class="dgm-muted" font-size="11">broken by</text>
+    <text x="300" y="134" text-anchor="middle" class="dgm-muted" font-size="11" font-weight="600">passive attacks</text>
+
+    <text x="210" y="252" text-anchor="middle" class="dgm-muted" font-size="11">broken by active attacks</text>
+  </svg>
+  <figcaption>The CIA triad. Passive attacks attack <strong>Confidentiality</strong>; active attacks (and DoS) attack <strong>Integrity</strong> and <strong>Availability</strong>.</figcaption>
+</figure>

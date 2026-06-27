@@ -1,0 +1,111 @@
+---
+title: Mobile & Wireless Device Security
+order: 3
+lectureHours: 8
+summary: Security challenges of mobile devices, cryptographic protection, attacks on phones, Bluetooth threats, and laptop viruses.
+topics: [Mobile challenges, Cryptography, Phone attacks, Bluetooth, Laptop viruses]
+---
+
+import Callout from '../../components/Callout.astro';
+
+## Security challenges posed by mobile devices
+
+Smartphones and tablets push the security "perimeter" out into **public, personal, and constantly-changing** spaces, which creates unique problems.
+
+### Main challenges
+
+- **Easy to lose or steal** — a small device holds passwords, photos, contacts, banking apps, and 2FA codes.
+- **Device fragmentation & OS vulnerabilities** — thousands of makers ship variations of Android/iOS; many budget phones stop getting **security patches**, leaving holes open forever.
+- **Unsecured networks** — devices constantly switch between cellular, home Wi-Fi, and risky **public Wi-Fi** (cafés, airports) that lack firewalls.
+- **Data leakage via apps** — users grant broad permissions (contacts, location, microphone) without thinking.
+- **Small screens** make security warnings easy to ignore, and many users never update.
+
+<Callout type="danger">
+**Real example:** an employee joins free café Wi-Fi. An attacker running a **Man-in-the-Middle (MitM)** attack intercepts their unencrypted corporate login.
+</Callout>
+
+## Cryptographic security for mobile devices
+
+**Cryptography uses mathematical algorithms to scramble data so it stays confidential, authentic, and tamper-proof — even if the device is stolen.**
+
+### Core techniques
+
+- **Encryption / Decryption** — convert readable data to unreadable form and back.
+- **Hashing** — detect whether data was changed.
+- **Digital signatures** — confirm authenticity and integrity.
+
+### How it's implemented on phones
+
+- **Full-Disk / File-Based Encryption (FDE/FBE)** — the OS encrypts storage automatically; pulled-out memory chips look like gibberish without the passcode.
+- **TLS / HTTPS** — encrypts data *in transit* between apps and servers, blocking packet sniffing.
+- **Hardware-backed storage** — secure chips (Apple Secure Enclave, Android Titan M) isolate keys and biometric data from the main OS.
+
+<Callout type="tip">
+**Real example:** Signal and WhatsApp use **End-to-End Encryption (E2EE)** — data is encrypted on the sender's device and only the recipient's private key can read it, so not even the provider can.
+</Callout>
+
+## Attacks on mobile / cellphones
+
+Phones are attacked physically and digitally to steal data, money, or control.
+
+- **Physical theft** — a stolen, weakly-locked phone gives direct access to banking apps, email, and 2FA tokens.
+- **Mobile viruses / malware** — hidden in fake apps; can be **spyware** (logging keystrokes) or premium-rate SMS dialers that drain balance.
+- **Mobile hacking (exploits)** — remote control via software flaws, sometimes with **zero-click** exploits needing no user action.
+
+### Signs a phone is hacked
+
+Sudden battery drain · unusual data usage · strange pop-ups/apps · overheating · messages sent without your knowledge.
+
+<Callout type="danger">
+**Real example — Pegasus spyware:** installed remotely on iPhones/Androids via a **zero-click** WhatsApp exploit, silently extracting photos and messages and turning on the microphone.
+</Callout>
+
+## Bluetooth security attacks
+
+Bluetooth is short-range wireless at **2.4 GHz**. Its discoverable modes and older protocols give nearby attackers entry points.
+
+| Attack | What it does | Severity |
+| :-- | :-- | :-- |
+| **Bluejacking** | Sends unsolicited anonymous messages/vCards | Mostly nuisance (can phish) |
+| **Bluesnarfing** | Steals files, contacts, calendar, texts without consent | Severe |
+| **Bluebugging** | Takes full remote control of the phone's command set (calls, SMS, bugging) | Most dangerous |
+
+### Safety measures
+
+Turn Bluetooth off when unused · use *discoverable* mode only when needed · pair only with trusted devices · keep firmware updated · reject unknown pairing requests.
+
+## Different viruses on a laptop
+
+Laptop malware is classified by **how it infects and spreads**.
+
+- **Boot sector virus** — infects the Master Boot Record (MBR); runs *before* the OS loads and can make the laptop unbootable (often spread via infected USB drives).
+- **Macro virus** — written in office macro languages; hides inside Word/Excel documents and triggers when macros are enabled.
+- **Polymorphic virus** — rewrites its own code/encryption each time it spreads, so signature-based antivirus struggles to catch it.
+- **Resident virus** — loads into RAM and infects files as they open, staying active after the host app closes.
+- **File / direct-action virus** — attaches to executables and runs when the file runs.
+- **Multipartite virus** — infects both boot sector *and* files.
+
+### Malware often confused with viruses
+
+- **Worm** — spreads by itself across networks (no host file needed).
+- **Trojan** — looks useful but hides harmful actions.
+- **Ransomware** — locks data and demands payment.
+- **Spyware** — secretly watches activity. **Adware** — floods you with ads.
+
+<Callout type="exam">
+**Key distinctions**
+
+- **Virus vs worm:** a virus needs a host file; a worm spreads on its own.
+- **Virus vs Trojan:** a virus replicates; a Trojan disguises itself and tricks the user.
+- **Theft vs hacking:** theft = physical removal of the device; hacking = unauthorized digital access.
+</Callout>
+
+<Callout type="exam">
+**One-line answers**
+
+- **Mobile security challenge:** anything that makes mobile data/communication vulnerable (theft, public Wi-Fi, risky apps).
+- **Cryptographic security:** protecting data with encryption, hashing, and digital signatures.
+- **Mobile hacking:** unauthorized access to a phone or its data.
+- **Bluetooth attack:** misusing Bluetooth to steal data, send messages, or control a device.
+- **Laptop virus:** malicious code that infects a laptop and harms data or performance.
+</Callout>

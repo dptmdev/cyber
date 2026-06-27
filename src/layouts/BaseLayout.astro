@@ -1,0 +1,115 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** When true, render the unit sidebar + reading layout. */
+  withSidebar?: boolean;
+  /** Show the scroll-progress bar (content pages). */
+  progress?: boolean;
+}
+
+const {
+  title,
+  description = 'Simple, exam-ready notes for Cyber Law and Ethics (OEC-CS801B). Built for clean reading on phone and desktop.',
+  withSidebar = false,
+  progress = false,
+} = Astro.props;
+
+const fullTitle =
+  title === 'Cyber Law & Ethics'
+    ? 'Cyber Law & Ethics — Exam Notes'
+    : `${title} · Cyber Law & Ethics`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{fullTitle}</title>
+
+    <!-- Set theme before paint to avoid a flash of the wrong theme -->
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = stored ?? (prefersDark ? 'dark' : 'light');
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    {progress && <div class="progress" id="progress" aria-hidden="true"></div>}
+    <div class="site">
+      <Header />
+      {
+        withSidebar ? (
+          <div class="layout">
+            <div class="scrim" id="scrim" aria-hidden="true"></div>
+            <Sidebar />
+            <main class="main">
+              <div class="fade-in">
+                <slot />
+              </div>
+            </main>
+          </div>
+        ) : (
+          <main class="main">
+            <div class="fade-in">
+              <slot />
+            </div>
+          </main>
+        )
+      }
+      <footer class="footer">
+        <p>Cyber Law &amp; Ethics (OEC-CS801B) · Study notes for revision.</p>
+        <p>Based on the prescribed syllabus &amp; <em>Cyber Security</em> by Nina Godbole &amp; Sunit Belapure.</p>
+      </footer>
+    </div>
+
+    <!-- Mobile menu + scroll progress -->
+    <script is:inline>
+      (() => {
+        const toggle = document.getElementById('nav-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const scrim = document.getElementById('scrim');
+        const close = () => {
+          sidebar?.classList.remove('is-open');
+          scrim?.classList.remove('is-open');
+          toggle?.setAttribute('aria-expanded', 'false');
+        };
+        toggle?.addEventListener('click', () => {
+          const open = sidebar?.classList.toggle('is-open');
+          scrim?.classList.toggle('is-open', open);
+          toggle.setAttribute('aria-expanded', String(!!open));
+        });
+        scrim?.addEventListener('click', close);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+        sidebar?.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+
+        const bar = document.getElementById('progress');
+        if (bar) {
+          const onScroll = () => {
+            const h = document.documentElement;
+            const max = h.scrollHeight - h.clientHeight;
+            const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+            bar.style.width = pct + '%';
+          };
+          document.addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        }
+      })();
+    </script>
+  </body>
+</html>

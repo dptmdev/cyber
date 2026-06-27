@@ -1,0 +1,34 @@
+---
+// How criminals plan an attack — the kill-chain style lifecycle.
+const steps = [
+  { n: 1, t: 'Reconnaissance', d: 'gather info' },
+  { n: 2, t: 'Weaponize', d: 'exploit + payload' },
+  { n: 3, t: 'Deliver', d: 'phish / USB' },
+  { n: 4, t: 'Exploit', d: 'gain foothold' },
+  { n: 5, t: 'Control', d: 'maintain + cover' },
+];
+---
+<figure class="figure">
+  <svg viewBox="0 0 460 130" role="img" aria-label="Five-stage attack lifecycle from reconnaissance to control">
+    {steps.map((s, i) => {
+      const x = 16 + i * 90;
+      return (
+        <g>
+          <circle cx={x + 26} cy="40" r="20" class="dgm-fill-accent"></circle>
+          <text x={x + 26} y="46" text-anchor="middle" class="dgm-inv" font-size="15" font-weight="700">{s.n}</text>
+          <text x={x + 26} y="82" text-anchor="middle" class="dgm-text" font-size="11" font-weight="600">{s.t}</text>
+          <text x={x + 26} y="97" text-anchor="middle" class="dgm-muted" font-size="9.5">{s.d}</text>
+          {i < steps.length - 1 && (
+            <line x1={x + 48} y1="40" x2={x + 88} y2="40" class="dgm-stroke-accent" stroke-width="2" marker-end="url(#arrowL)"></line>
+          )}
+        </g>
+      );
+    })}
+    <defs>
+      <marker id="arrowL" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0 0 L6 3 L0 6 z" class="dgm-fill-accent"></path>
+      </marker>
+    </defs>
+  </svg>
+  <figcaption>The attack lifecycle (cyber kill chain). Attacks are planned in stages — defence at any stage can break the chain.</figcaption>
+</figure>

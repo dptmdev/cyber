@@ -1,0 +1,108 @@
+---
+title: Tools & Methods Used in Cybercrime
+order: 4
+lectureHours: 8
+summary: Proxy servers, password & random checking, Trojans and backdoors, DoS/DDoS, SQL injection, and buffer overflow.
+topics: [Proxy servers, Password cracking, Trojans & backdoors, DoS/DDoS, SQL injection, Buffer overflow]
+---
+
+import Callout from '../../components/Callout.astro';
+import DosVsDdos from '../../components/diagrams/DosVsDdos.astro';
+
+This unit is about **how** attacks are carried out — explain both the *meaning* and the *purpose* of each tool.
+
+## Proxy servers
+
+**A proxy server is an intermediary between a user and the internet.** Legitimately it provides privacy and caching; criminals abuse it to **hide their real IP and location**.
+
+- **Mechanism:** the target logs the *proxy's* IP, not the attacker's. Criminals **chain** several proxies across countries so tracing is nearly impossible.
+- **Purpose in crime:** anonymity, and bypassing geo-restrictions / IP whitelists.
+
+<Callout type="tip">
+**Example:** a hacker in Russia routes through proxies in Brazil and Germany to attack a UK firm, making it look like the attack came from South America. A proxy isn't illegal in itself — it's suspicious only when used to hide crime.
+</Callout>
+
+## Password checking (cracking / guessing)
+
+**Automated methods that systematically guess or test credentials** to gain unauthorized access.
+
+- **Brute-force** — try every possible combination until one works.
+- **Dictionary attack** — run through a pre-made list of common words and leaked passwords (`Password123`, `qwerty`).
+- **Credential stuffing** — replay username/password pairs stolen in one breach against other sites, exploiting **password reuse**.
+
+It works because people pick weak passwords (names, dates) and reuse them.
+
+## Random checking (vulnerability scanning / probing)
+
+**Sweeping a wide range of random IPs/networks** to find unpatched software, open ports, or weak settings — rather than targeting one company.
+
+- **Mechanism:** automated scanners broadcast requests to random servers and flag whichever reply with an exploitable weakness.
+- **Significance:** it's the opening phase of *opportunistic* attacks like mass ransomware.
+
+<Callout type="tip">
+**Example:** a botnet scans thousands of servers for an outdated, vulnerable Apache version; any unpatched server that responds is queued for an exploit.
+</Callout>
+
+## Trojan horses and backdoors
+
+- **Trojan horse** — malicious software **disguised as something legitimate** (a game, a free PDF reader). It needs the user to run it; it does **not** self-replicate like a virus.
+- **Backdoor** — a hidden way into a system that **bypasses normal authentication**, letting an attacker return later unnoticed.
+
+They work together: a backdoor is embedded inside a Trojan; installing the Trojan quietly opens the backdoor, allowing remote login, keylogging, or file theft at any time.
+
+<Callout type="tip">
+**Example:** a free "utility" actually does its job *and* secretly opens network **Port 4444** (backdoor), giving an off-site attacker full remote control. Memory hook: a Trojan is a **gift that hides danger inside**.
+</Callout>
+
+## DoS and DDoS attacks
+
+- **DoS (Denial of Service)** — make a machine/service unavailable to real users by **flooding it** with traffic or requests (e.g. SYN floods, HTTP floods) until RAM/bandwidth/CPU is exhausted.
+- **DDoS (Distributed DoS)** — the same goal launched from **thousands of compromised devices at once** (a **botnet**).
+
+<DosVsDdos />
+
+**The difference:** DoS comes from one source (easy to block); DDoS comes from many sources worldwide (very hard to filter).
+
+<Callout type="danger">
+**Example:** a hacktivist botnet of millions of infected IoT devices (cameras, routers) floods an e-commerce site with billions of requests on Black Friday, crashing it and halting sales.
+</Callout>
+
+## SQL injection (SQLi)
+
+**Inserting malicious SQL code into a website's input fields** so the backend database runs unintended commands.
+
+- **Mechanism:** if input isn't validated/sanitised, the attacker types database commands instead of normal text, and the database executes them as instructions.
+- **Impact:** bypass logins, read/alter confidential records, or dump the entire database (passwords, financial data).
+- **Prevention:** input validation, **parameterized queries**, least-privilege database accounts.
+
+<Callout type="tip">
+**Classic example:** entering `' OR '1'='1` in a login field. Because `1=1` is always true, the database is tricked into logging the attacker in without a valid password.
+</Callout>
+
+## Buffer overflow
+
+**Writing more data into a memory buffer than it can hold**, so the excess spills into adjacent memory and overwrites legitimate code.
+
+- **Mechanism:** in memory-unsafe languages (C/C++) without strict bounds checking, oversized input leaks into the program's instruction pointers.
+- **Exploitation:** the attacker crafts the overflow to contain **shellcode**, forcing the program to run the attacker's code with its privileges.
+- **Prevention:** secure coding, input-size checks, memory-safe practices, and patching.
+
+<Callout type="tip">
+**Example:** a field expects an 8-character password; the attacker sends 500 carefully chosen characters that overwrite memory pointers and pop a command prompt with **admin privileges**.
+</Callout>
+
+<Callout type="exam">
+**One-line summary table**
+
+| Term | Meaning | Attacker's purpose |
+| :-- | :-- | :-- |
+| Proxy server | Middle system that hides the real IP | Hide identity |
+| Password checking | Repeatedly testing passwords | Break into accounts |
+| Random checking | Scanning random hosts for weaknesses | Find easy targets |
+| Trojan horse | Fake-useful software with hidden harm | Sneak in malware |
+| Backdoor | Hidden access route | Re-enter later |
+| DoS | Flood from one source | Make service unavailable |
+| DDoS | Flood from a botnet | Overload & shut down |
+| SQL injection | Malicious SQL in inputs | Steal/alter database data |
+| Buffer overflow | Overrun memory limits | Crash or run code |
+</Callout>

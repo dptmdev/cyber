@@ -1,0 +1,18 @@
+# Render Blueprint — deploys this Astro project as a static site.
+# If this repo's root IS the `site/` folder, Render auto-detects this file.
+# Otherwise, set the service's Root Directory to `site` in the dashboard.
+services:
+  - type: web
+    name: cyber-law-and-ethics-notes
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    pullRequestPreviewsEnabled: true
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+    routes:
+      - type: rewrite
+        source: /404
+        destination: /404.html
