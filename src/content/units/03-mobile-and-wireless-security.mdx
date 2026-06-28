@@ -11,110 +11,124 @@ import MobileEncryption from '../../components/diagrams/MobileEncryption.astro';
 import BluetoothLadder from '../../components/diagrams/BluetoothLadder.astro';
 import MalwareMap from '../../components/diagrams/MalwareMap.astro';
 
+Mobile and wireless devices are now the primary computers in most people's lives, holding banking apps, photos, contacts, passwords, and work data. This makes them a prime target. This unit looks at *why* they are hard to secure, *how* cryptography protects them, the main *attacks* against phones, *Bluetooth* threats, and the *types of viruses* found on laptops.
+
 ## Security challenges posed by mobile devices
 
-Smartphones and tablets push the security "perimeter" out into **public, personal, and constantly-changing** spaces, which creates unique problems.
+Traditional security assumed a fixed "perimeter" — computers inside an office, protected by the company firewall. Mobile devices destroy that assumption: they travel everywhere, connect to many networks, and mix personal and work data. This shift creates several unique challenges.
 
-### Main challenges
+### The main challenges
 
-- **Easy to lose or steal** — a small device holds passwords, photos, contacts, banking apps, and 2FA codes.
-- **Device fragmentation & OS vulnerabilities** — thousands of makers ship variations of Android/iOS; many budget phones stop getting **security patches**, leaving holes open forever.
-- **Unsecured networks** — devices constantly switch between cellular, home Wi-Fi, and risky **public Wi-Fi** (cafés, airports) that lack firewalls.
-- **Data leakage via apps** — users grant broad permissions (contacts, location, microphone) without thinking.
-- **Small screens** make security warnings easy to ignore, and many users never update.
+- **Portability — easy to lose or steal.** A device that fits in a pocket can be lost or stolen in seconds, handing over all the data inside it.
+- **Device fragmentation & unpatched OS.** Thousands of manufacturers ship many different versions of Android/iOS. Many cheaper devices **stop receiving security updates** early, so known vulnerabilities stay open forever.
+- **Unsecured network connections.** Phones constantly switch between mobile data, home Wi-Fi, and risky **public Wi-Fi** (cafés, airports) that has no firewall and may be controlled by an attacker.
+- **Data leakage through apps (over-permissioning).** Users install apps and grant broad permissions — contacts, location, microphone, storage — without understanding the privacy risk. A careless or malicious app can quietly harvest data.
+- **Weak user habits.** Small screens make warnings easy to ignore; people reuse passwords, skip updates, and tap links quickly.
+- **BYOD (Bring Your Own Device).** Personal phones used for work blur the line between corporate and personal data, complicating security.
 
 <Callout type="danger">
-**Real example:** an employee joins free café Wi-Fi. An attacker running a **Man-in-the-Middle (MitM)** attack intercepts their unencrypted corporate login.
+**Real example — Man-in-the-Middle (MitM):** an employee joins free café Wi-Fi. An attacker on the same network secretly relays the traffic and captures the employee's unencrypted corporate login.
 </Callout>
 
 ## Cryptographic security for mobile devices
 
-**Cryptography uses mathematical algorithms to scramble data so it stays confidential, authentic, and tamper-proof — even if the device is stolen.**
+**Cryptography is the use of mathematical algorithms to scramble information so that it stays confidential, authentic, and tamper-proof — even if the device or the network is compromised.** It is the single most important technical defence for mobile data.
 
-### Core techniques
+### Core cryptographic techniques
 
-- **Encryption / Decryption** — convert readable data to unreadable form and back.
-- **Hashing** — detect whether data was changed.
-- **Digital signatures** — confirm authenticity and integrity.
+- **Encryption** — converting readable data (plaintext) into unreadable form (ciphertext) using a key. **Decryption** reverses it with the correct key.
+- **Hashing** — producing a fixed fingerprint of data; if even one bit changes, the hash changes, so it detects tampering (used for integrity and password storage).
+- **Digital signatures** — using a private key to prove who sent a message and that it was not altered.
 
-### How it's implemented on phones
+### Where cryptography protects mobile data
 
-- **Full-Disk / File-Based Encryption (FDE/FBE)** — the OS encrypts storage automatically; pulled-out memory chips look like gibberish without the passcode.
-- **TLS / HTTPS** — encrypts data *in transit* between apps and servers, blocking packet sniffing.
-- **Hardware-backed storage** — secure chips (Apple Secure Enclave, Android Titan M) isolate keys and biometric data from the main OS.
+Two situations matter, and you should mention both in an answer:
 
 <MobileEncryption />
 
+- **Data at rest** (stored on the device) — **Full-Disk Encryption (FDE)** or **File-Based Encryption (FBE)** automatically encrypts the storage. If a thief removes the memory chips, the data is unreadable gibberish without the passcode.
+- **Data in transit** (moving over the network) — **TLS/HTTPS** encrypts the link between the app and the server, defeating packet sniffing. Secure messaging apps add **End-to-End Encryption (E2EE)**, where only the sender and recipient hold the keys.
+- **Hardware-backed storage** — secure chips (Apple **Secure Enclave**, Android **Titan M**) store keys and biometric data in isolation from the main OS.
+
 <Callout type="tip">
-**Real example:** Signal and WhatsApp use **End-to-End Encryption (E2EE)** — data is encrypted on the sender's device and only the recipient's private key can read it, so not even the provider can.
+**Real example:** Signal and WhatsApp use **E2EE** — the message is encrypted on the sender's phone and can only be decrypted by the recipient, so not even the service provider can read it.
 </Callout>
 
 ## Attacks on mobile / cellphones
 
-Phones are attacked physically and digitally to steal data, money, or control.
+Phones are attacked in three broad ways — by physical means, by malware, and by remote hacking — to steal data, steal money, or seize control.
 
-- **Physical theft** — a stolen, weakly-locked phone gives direct access to banking apps, email, and 2FA tokens.
-- **Mobile viruses / malware** — hidden in fake apps; can be **spyware** (logging keystrokes) or premium-rate SMS dialers that drain balance.
-- **Mobile hacking (exploits)** — remote control via software flaws, sometimes with **zero-click** exploits needing no user action.
+### Theft
 
-### Signs a phone is hacked
+Physical **theft** of a device gives the attacker direct access. If the phone lacks a strong passcode or remote-wipe capability, the thief can open banking apps, read email, and even grab **two-factor authentication (2FA)** codes.
+- **Prevention:** strong screen lock/biometrics, **remote tracking and remote wipe**, device encryption, and minimal sensitive data stored locally.
 
-Sudden battery drain · unusual data usage · strange pop-ups/apps · overheating · messages sent without your knowledge.
+### Viruses / malware
+
+Malicious software hidden inside seemingly harmless apps. On phones it often appears as **spyware** (logging keystrokes, location, messages) or **premium-rate SMS dialers** that silently drain the user's balance.
+- **Signs:** rapid battery drain, high data usage, strange pop-ups, overheating, unknown apps.
+- **Prevention:** install only from official stores, review permissions, keep the OS updated, use mobile security software.
+
+### Hacking (remote exploits)
+
+Gaining unauthorized **remote control** of a phone by exploiting software flaws — sometimes through **zero-click** exploits that need no action from the user at all.
 
 <Callout type="danger">
-**Real example — Pegasus spyware:** installed remotely on iPhones/Androids via a **zero-click** WhatsApp exploit, silently extracting photos and messages and turning on the microphone.
+**Real example — Pegasus spyware:** installed remotely on target iPhones/Androids via a "zero-click" exploit, allowing attackers to silently extract photos and messages and even switch on the microphone.
 </Callout>
 
 ## Bluetooth security attacks
 
-Bluetooth is short-range wireless at **2.4 GHz**. Its discoverable modes and older protocols give nearby attackers entry points.
+**Bluetooth is a short-range wireless technology (around 2.4 GHz)** used to connect phones, earbuds, keyboards, and cars. Its convenience, "discoverable" modes, and older protocols give nearby attackers several ways in.
 
 | Attack | What it does | Severity |
 | :-- | :-- | :-- |
-| **Bluejacking** | Sends unsolicited anonymous messages/vCards | Mostly nuisance (can phish) |
-| **Bluesnarfing** | Steals files, contacts, calendar, texts without consent | Severe |
-| **Bluebugging** | Takes full remote control of the phone's command set (calls, SMS, bugging) | Most dangerous |
+| **Bluejacking** | Sends unsolicited, anonymous messages/contact cards to nearby devices | Mostly a nuisance (can be used to phish) |
+| **Bluesnarfing** | Connects without consent and **steals** files, contacts, calendar, and texts | Severe |
+| **Bluebugging** | Takes **full remote control** of the phone — make calls, read SMS, use it as a listening bug | Most dangerous |
 
 <BluetoothLadder />
 
 ### Safety measures
 
-Turn Bluetooth off when unused · use *discoverable* mode only when needed · pair only with trusted devices · keep firmware updated · reject unknown pairing requests.
+Turn Bluetooth **off when not in use**; keep the device **non-discoverable** except when pairing; pair only with **trusted devices**; keep firmware updated; and **reject unknown pairing requests**.
 
 ## Different viruses on a laptop
 
-Laptop malware is classified by **how it infects and spreads**.
+A virus is malicious code that attaches itself to a host file or program and replicates. Laptop viruses are classified by **how and where they infect** the system — a favourite long-answer topic.
 
-- **Boot sector virus** — infects the Master Boot Record (MBR); runs *before* the OS loads and can make the laptop unbootable (often spread via infected USB drives).
-- **Macro virus** — written in office macro languages; hides inside Word/Excel documents and triggers when macros are enabled.
-- **Polymorphic virus** — rewrites its own code/encryption each time it spreads, so signature-based antivirus struggles to catch it.
-- **Resident virus** — loads into RAM and infects files as they open, staying active after the host app closes.
-- **File / direct-action virus** — attaches to executables and runs when the file runs.
-- **Multipartite virus** — infects both boot sector *and* files.
+### Types of viruses
+
+- **Boot sector virus** — infects the **Master Boot Record (MBR)** or boot sector and runs *before* the operating system loads, often making the laptop unbootable. Classically spread through infected USB drives.
+- **File / program (direct-action) virus** — attaches to executable files and runs when that file is opened.
+- **Macro virus** — written in the macro language of office apps (Word, Excel); hides inside documents and triggers as soon as macros are enabled.
+- **Polymorphic virus** — rewrites its own code and encryption keys every time it spreads, changing its "signature" so that signature-based antivirus struggles to recognise it.
+- **Resident virus** — loads itself into **RAM** and stays active in memory, infecting files as they are opened, even after the original host is closed.
+- **Multipartite virus** — infects **both** the boot sector *and* files, spreading by multiple routes.
+
+### Other malware often confused with viruses
 
 <MalwareMap />
 
-### Malware often confused with viruses
-
-- **Worm** — spreads by itself across networks (no host file needed).
-- **Trojan** — looks useful but hides harmful actions.
-- **Ransomware** — locks data and demands payment.
-- **Spyware** — secretly watches activity. **Adware** — floods you with ads.
+- **Worm** — spreads by itself across networks **without** needing a host file.
+- **Trojan horse** — disguises itself as useful software; does not self-replicate, but tricks the user into running it.
+- **Ransomware** — encrypts the victim's data and demands payment for the key.
+- **Spyware** — secretly monitors activity; **Adware** floods the user with unwanted ads.
 
 <Callout type="exam">
-**Key distinctions**
+**Key distinctions to write**
 
-- **Virus vs worm:** a virus needs a host file; a worm spreads on its own.
-- **Virus vs Trojan:** a virus replicates; a Trojan disguises itself and tricks the user.
-- **Theft vs hacking:** theft = physical removal of the device; hacking = unauthorized digital access.
+- **Virus vs worm:** a virus needs a host file to spread; a worm spreads on its own across networks.
+- **Virus vs Trojan:** a virus replicates; a Trojan does not — it disguises itself and depends on the user running it.
+- **Theft vs hacking:** theft is the *physical* removal of the device; hacking is *digital* unauthorized access.
 </Callout>
 
 <Callout type="exam">
 **One-line answers**
 
-- **Mobile security challenge:** anything that makes mobile data/communication vulnerable (theft, public Wi-Fi, risky apps).
-- **Cryptographic security:** protecting data with encryption, hashing, and digital signatures.
-- **Mobile hacking:** unauthorized access to a phone or its data.
-- **Bluetooth attack:** misusing Bluetooth to steal data, send messages, or control a device.
-- **Laptop virus:** malicious code that infects a laptop and harms data or performance.
+- **Mobile security challenge:** any factor that makes mobile data/communication vulnerable — theft, public Wi-Fi, risky apps, unpatched OS.
+- **Cryptographic security:** protecting data with encryption, hashing, and digital signatures, at rest and in transit.
+- **Mobile hacking:** unauthorized remote access to a phone or its data (e.g. zero-click exploits like Pegasus).
+- **Bluetooth attack:** misusing Bluetooth to send spam (bluejacking), steal data (bluesnarfing), or take control (bluebugging).
+- **Laptop virus:** self-replicating malicious code attached to a host, classified by how it infects (boot, file, macro, polymorphic, resident, multipartite).
 </Callout>

@@ -13,84 +13,100 @@ import CIATriad from '../../components/diagrams/CIATriad.astro';
 
 ## How criminals plan attacks
 
-Cybercriminals rarely act randomly. They follow a structured, multi-stage plan — often called the **Cyber Kill Chain** — to maximise success and avoid detection.
+A common misunderstanding is that cyberattacks are random or spur-of-the-moment. In reality, **serious cybercriminals plan attacks carefully in stages.** This structured plan is often described using the **Cyber Kill Chain** model, which breaks an attack into the sequence of steps an attacker must complete to succeed. Understanding it is valuable because **breaking the chain at any single stage stops the whole attack** — this is the basis of "defence in depth".
 
 <AttackLifecycle />
 
-### The planning stages
+### The stages of planning, in detail
 
-1. **Reconnaissance (information gathering)** — choose a target and collect intelligence. *Passive* research uses public records, LinkedIn, and social media; *active* research scans the target's network for open ports.
-2. **Weaponization & staging** — pair an **exploit** (a software weakness) with a **payload** (malware), and set up infrastructure such as fake domains or command-and-control servers.
-3. **Delivery & exploitation** — send the weapon (phishing email, corrupted USB) and run it to gain an initial foothold.
-4. **Exploit / gain access**, then **maintain access** and **cover tracks**.
+1. **Reconnaissance (information gathering)** — the attacker first selects a target and learns everything possible about it.
+   - *Passive reconnaissance* uses publicly available information without touching the target — company websites, LinkedIn, social media, news, public records.
+   - *Active reconnaissance* directly probes the target, e.g. scanning its network for open ports and live services.
+2. **Weaponization & staging** — the attacker pairs an **exploit** (a way to abuse a specific vulnerability) with a **payload** (the malicious code that does the damage, such as ransomware or spyware), and sets up infrastructure like fake domains or command-and-control (C2) servers.
+3. **Delivery** — the weapon is sent to the victim, commonly through a **phishing email**, a malicious link, or an infected USB drive.
+4. **Exploitation** — the victim triggers the exploit (e.g. opens the attachment), giving the attacker an initial foothold.
+5. **Installation / maintaining access** — the attacker installs backdoors so they can return even if the original hole is closed.
+6. **Command & control and actions** — the attacker remotely controls the system, then achieves their goal: stealing data, encrypting files, or spreading further.
+7. **Covering tracks** — logs are deleted to delay or prevent detection.
 
-### Why study this?
+### Why this matters legally and defensively
 
-Knowing *how* attacks are planned lets defenders use **defence-in-depth** — breaking the chain at any single stage stops the attack. Legally, in many places **even planning or building attack tools** (like writing ransomware) is an offence, even if the attack is stopped before it runs.
+Knowing the stages lets defenders place controls at every step (email filters, network monitoring, least-privilege access, backups). Under cyber law, **even the preparatory acts** — writing malware, building tools, or buying attack infrastructure — are treated as offences in many jurisdictions, even if the final attack is intercepted before it succeeds.
 
 ## Passive attacks
 
-**A passive attack intercepts or monitors data without altering it.** The goal is to steal information, so the system keeps working normally — which makes passive attacks **very hard to detect**.
+**A passive attack is one in which the attacker secretly intercepts, monitors, or copies data passing through a system, without changing the data or disrupting the system in any way.** The aim is purely to **steal information** — to learn something the attacker is not supposed to know.
+
+### How a passive attack works
+
+Because nothing is altered and no service is interrupted, the system continues to function perfectly normally. The victim usually has **no idea** the attack is happening, which is what makes passive attacks **extremely difficult to detect**.
 
 ### Common types
 
-1. **Eavesdropping / sniffing** — capturing and reading unencrypted packets on a LAN or public Wi-Fi.
-2. **Traffic analysis** — even when data is encrypted, watching the *frequency, size, and destination* of messages to deduce who is talking to whom.
+1. **Eavesdropping / sniffing** — capturing and reading data packets as they travel across a network, especially **unencrypted** traffic on a LAN or public Wi-Fi. Tools called packet sniffers can read usernames, passwords, and messages sent "in the clear".
+2. **Traffic analysis** — even when the data itself is **encrypted** and cannot be read, the attacker studies the *pattern* of communication: who is talking to whom, how often, message sizes, and timing. From this they can deduce identities, relationships, and activities.
 
-### Security impact
+### Security impact and prevention
 
-Passive attacks break **Confidentiality** (the *C* in the CIA triad). Since detection is nearly impossible, the main defence is **prevention through strong encryption** (HTTPS, VPNs) so intercepted data is unreadable.
+Passive attacks attack **Confidentiality** — the "C" of the CIA triad. Since detection is nearly impossible, the main defence is **prevention through strong encryption** (HTTPS, TLS, VPNs), which makes any intercepted data unreadable, plus avoiding untrusted public networks.
 
 ## Active attacks
 
-**An active attack alters system resources, modifies data, or disrupts normal operation.** Unlike passive attacks, it changes the system's state, so it **leaves a visible footprint**.
+**An active attack is a deliberate attempt to alter system resources, modify or destroy data, or disrupt the normal operation of a system or network.** Unlike a passive attack, the attacker *interacts aggressively* with the system, so the attack **changes the state of the system and leaves a visible footprint** that can later be detected in logs.
 
 ### Common types
 
-1. **Masquerading (spoofing)** — pretending to be a legitimate user/system to gain privileges.
-2. **Modification of messages** — intercepting and altering data in transit (e.g. changing an account number in a wire transfer).
-3. **Denial of Service (DoS)** — flooding a system with junk traffic so it crashes and becomes unavailable.
+1. **Masquerading (spoofing)** — the attacker pretends to be a legitimate user or system to gain access and privileges they should not have.
+2. **Replay** — capturing a valid data transmission (e.g. a login token) and re-sending it later to gain access.
+3. **Modification of messages** — intercepting genuine data and altering it before it reaches the receiver, e.g. changing the account number in a money transfer.
+4. **Denial of Service (DoS)** — overwhelming a system with junk traffic so it crashes and becomes unavailable to genuine users.
 
 ### Security impact
 
-Active attacks break **Integrity** and **Availability**. They are easier to detect (logs show the change) but cause immediate, severe damage — so they carry the heaviest criminal penalties.
+Active attacks break **Integrity** (data is changed) and **Availability** (service is disrupted). They cause immediate, severe financial and operational damage. They are *easier to detect* than passive attacks but *harder to prevent completely*, and they carry the heaviest criminal penalties because of their destructive nature.
 
 <PassiveVsActive />
 
 <CIATriad />
 
 <Callout type="exam">
-**Passive vs Active — the line examiners love**
+**Passive vs Active — the comparison examiners want**
 
-| | Passive | Active |
+| | Passive attack | Active attack |
 | :-- | :-- | :-- |
-| Action | Only observes | Alters / disrupts |
-| Data changed? | No | Yes |
-| Detection | Very hard | Easier (leaves trace) |
-| Security goal hit | Confidentiality | Integrity & Availability |
-| Examples | Sniffing, traffic analysis | Spoofing, message modification, DoS |
+| What happens | Only observes / copies | Alters, destroys, or disrupts |
+| Is data changed? | No | Yes |
+| Detection | Very hard (no trace) | Easier (leaves a footprint) |
+| Prevention | Easier (encryption) | Harder |
+| Security goal violated | Confidentiality | Integrity & Availability |
+| Examples | Sniffing, traffic analysis | Spoofing, replay, message modification, DoS |
 </Callout>
 
 ## Cyberstalking
 
-**Cyberstalking is repeatedly using the internet, social media, email, or other digital tools to harass, threaten, monitor, or intimidate a victim.** It is defined by its **repetitive and obsessive** nature.
+**Cyberstalking is the repeated and deliberate use of the internet, social media, email, or other electronic communication to harass, threaten, intimidate, or monitor a specific victim.** It is the online form of stalking, and it is defined by its **repetitive, persistent, and obsessive** nature — a single rude message is not cyberstalking; a sustained campaign is.
 
-### Common behaviour
+### Methods used by cyberstalkers
 
-- Repeated threatening emails, texts, or spammed social-media comments.
-- **Doxxing** — publicly releasing a victim's private information (home address, phone number) to invite others to harass them.
-- Using **spyware / stalkerware** or unauthorized GPS tracking to monitor a victim's location and online activity.
-- Creating fake accounts to harass or impersonate.
+- Sending repeated threatening or abusive emails, messages, and social-media comments.
+- **Doxxing** — publicly releasing the victim's private information (home address, phone number, workplace) to expose them and invite others to harass them.
+- Creating **fake accounts** to impersonate, monitor, or trap the victim.
+- Using **spyware / stalkerware** or unauthorized **GPS tracking** to secretly monitor the victim's location, calls, and online activity.
+- Spreading false or private information to damage the victim's reputation.
 
-### Why it is serious
+### Effects on the victim
 
-Cyberstalking violates the right to **privacy and safety** and can escalate into **real-world violence**. Modern cyber law treats it as a distinct offence, often punishable with jail time and restraining orders — shifting cybercrime from "just fraud" to a threat to physical human safety.
+Cyberstalking causes serious **psychological harm** — fear, anxiety, stress, and loss of privacy. Because the harassment follows the victim everywhere through their devices, it can feel inescapable, and it frequently **escalates into real-world physical danger**.
+
+### Legal seriousness
+
+Modern cyber law treats cyberstalking as a **distinct criminal offence**, often punishable with imprisonment and restraining orders. Its recognition marks an important shift: cybercrime is no longer seen as only economic fraud, but also as a genuine **threat to human safety**.
 
 <Callout type="exam">
 **One-line answers**
 
-- **Attack planning:** a staged process (recon → weaponize → deliver → exploit → control) — the cyber kill chain.
-- **Passive attack:** secretly observing data without changing it (breaks Confidentiality).
-- **Active attack:** altering, faking, or disrupting data/services (breaks Integrity & Availability).
-- **Cyberstalking:** repeated online harassment, threats, or monitoring of a victim.
+- **Attack planning:** a staged process (recon → weaponize → deliver → exploit → install → control → cover tracks) — the cyber kill chain.
+- **Passive attack:** secretly observing/copying data without changing it (breaks Confidentiality; hard to detect).
+- **Active attack:** altering, faking, or disrupting data/services (breaks Integrity & Availability; leaves a trace).
+- **Cyberstalking:** repeated, deliberate online harassment, threats, or monitoring of a victim.
 </Callout>

@@ -10,71 +10,85 @@ import Callout from '../../components/Callout.astro';
 import PhishingFlow from '../../components/diagrams/PhishingFlow.astro';
 import IdentityTheftLifecycle from '../../components/diagrams/IdentityTheftLifecycle.astro';
 
+Phishing and identity theft are closely linked: phishing is one of the most common *methods* used to **steal** the personal information that is then misused in identity theft. This unit covers how phishing works and its variants, what identity theft is and its lifecycle, and the specific online techniques criminals use to fake identities.
+
 ## Phishing
 
-**Phishing is a form of social engineering where an attacker impersonates a trusted entity (a bank, government, or brand) to trick victims into revealing sensitive information** — passwords, OTPs, PINs, or card details. It works by creating **fear, urgency, or curiosity** ("your account will be blocked", "claim your reward").
+**Phishing is a form of social engineering in which an attacker impersonates a trustworthy entity — a bank, a government department, or a popular brand — to trick a victim into revealing sensitive information** such as passwords, OTPs, PINs, or card details, or into installing malware.
 
-### Phishing methods
+### How phishing works (the psychology)
 
-- **Email phishing** — fake emails that look like a bank, office, or social-media site.
-- **Spear phishing** — a *targeted* attack on a specific person/organisation, using details gathered from social media to look authentic.
-- **Whaling** — spear phishing aimed at **high-profile executives** (CEO, CFO) to steal secrets or authorise large transfers.
-- **Vishing (voice)** — phone calls pretending to be bank/support staff.
-- **Smishing (SMS)** — fraudulent texts with fake links or urgent warnings.
-- **Website / clone phishing** — fake look-alike sites, or a real message copied and re-sent with a malicious link.
+Phishing succeeds by manipulating human emotion rather than breaking technology. The message deliberately creates **fear, urgency, greed, or curiosity** — "Your account will be blocked in 24 hours", "Suspicious login detected", or "Click here to claim your reward". Under pressure, the victim acts quickly without checking, clicks a link to a **fake but realistic website**, and enters their details, which go straight to the attacker.
 
 <PhishingFlow />
 
+### Phishing methods (variants)
+
+- **Email phishing** — mass fake emails that look like they are from a bank, office, or social-media site.
+- **Spear phishing** — a **targeted** attack on a specific person or organisation, using personal details gathered from social media to make the message look uniquely genuine.
+- **Whaling** — spear phishing aimed at **high-profile executives** (CEO, CFO) to steal corporate secrets or authorise large fraudulent transfers.
+- **Vishing (voice phishing)** — phone calls pretending to be bank or support staff, often using urgency.
+- **Smishing (SMS phishing)** — fraudulent text messages containing fake links or alarming warnings.
+- **Clone / website phishing** — copying a genuine message or website and replacing the links with malicious ones; building pixel-perfect fake login pages.
+- **Pharming** — redirecting users from a genuine address to a fake site by poisoning DNS, even when they type the correct URL.
+
 <Callout type="danger">
-**Real example (whaling):** an accountant gets an urgent email that looks like it's from the CEO demanding an immediate wire transfer to a vendor. They comply — only to find the address was subtly **spoofed**.
+**Real example (whaling):** an accountant receives an urgent email that appears to come from the CEO, demanding an immediate wire transfer to close a deal. They comply — only to discover the sender's address was subtly **spoofed**.
 </Callout>
 
 ## Identity theft (ID theft)
 
-**Identity theft is illegally acquiring and using another person's personal identifying information (PII)** — name, date of birth, Aadhaar, passport, bank, or login details — usually for financial fraud.
+**Identity theft is the crime of illegally obtaining and using another person's Personal Identifying Information (PII) — such as name, date of birth, Aadhaar/SSN, passport, or bank and login details — without consent, typically for financial fraud or impersonation.**
 
 ### The identity-theft lifecycle
 
-1. **Information acquisition** — gather PII via data breaches, phishing, dumpster diving, or buying stolen profiles on the dark web.
-2. **Exploitation (the fraud)** — open fraudulent accounts, take loans, claim tax refunds, or run up medical bills in the victim's name.
-3. **Consequences** — credit damage, legal trouble, and a long, costly process for the victim to clear their name.
+Identity theft generally proceeds in three stages, which make a clean long-answer structure:
 
 <IdentityTheftLifecycle />
 
-### Types
+1. **Information acquisition** — the criminal gathers PII through **data breaches, phishing, malware/spyware, dumpster diving** (searching physical/digital trash), or simply **buying stolen profiles on the dark web**.
+2. **Exploitation (the fraud)** — the stolen data is used to open fraudulent bank accounts, take out loans, claim tax refunds, run up medical bills, or make purchases in the victim's name.
+3. **Consequences** — the victim is left with a damaged credit score, legal complications, and a long, expensive process to prove the fraud and restore their identity.
 
-- **Financial** — using data to take money or open accounts.
-- **Medical** — using someone's identity to obtain medical services.
-- **Account takeover** — seizing email, banking, or social accounts.
-- **Fake / synthetic identity** — building new fake profiles or documents.
+### Types of identity theft
+
+- **Financial identity theft** — using someone's data to take money or open accounts (the most common).
+- **Medical identity theft** — using another person's identity to obtain medical treatment or insurance.
+- **Account takeover** — seizing control of existing email, banking, or social accounts.
+- **Synthetic identity theft** — building a brand-new fake identity (covered below).
 
 <Callout type="danger">
-**Real example (medical ID theft):** a criminal steals patient insurance records from a breach and uses a victim's policy for expensive procedures — leaving the real person with a ruined credit score and mystery medical debt.
+**Real example (medical ID theft):** a criminal steals patient insurance records from a hospital data breach and uses a victim's policy to obtain expensive procedures, leaving the real person with a ruined credit score and mystery medical debt.
 </Callout>
 
-## Online identity methods (techniques criminals use)
+## Online identity methods (techniques used by criminals)
 
-These are the specific digital tricks used to build fake personas or impersonate real people online.
+These are the specific digital techniques used to **construct fake online personas or impersonate real people**.
 
-- **Spoofing (IP, email, domain)** — forging headers/details so a message looks trusted. Includes **typosquatting** — registering look-alike domains like `panypal.com` instead of `paypal.com`.
-- **Synthetic identity theft** — blending **real** stolen data with **fake** data to create a brand-new identity that belongs to no single real person, making it very hard for fraud systems to detect.
-- **Social-media cloning** — scraping public photos and bio to build a parallel fake account that scams the victim's friends and family.
-- **Malware / spyware, fake apps, data breaches, social engineering, and password-reuse attacks** all feed identity theft.
+- **Spoofing (IP, email, domain)** — forging the source details of a communication so it appears to come from a trusted origin. This includes **typosquatting** — registering look-alike domains such as `panypal.com` instead of `paypal.com` to fool users who mistype or glance quickly.
+- **Synthetic identity theft** — a sophisticated method where the criminal **blends real stolen data with fabricated data** to build a completely new identity that does not belong to any single living person. Because it is partly fake, automated fraud-detection systems struggle to flag it.
+- **Social-media cloning** — scraping a real person's public photos and biography to build an **identical parallel account**, then using it to scam that person's friends and family.
+- **Supporting techniques** — malware/spyware that steals credentials, **fake apps** that request excessive permissions, **data breaches** that leak databases, **social engineering**, and **password-reuse (credential-stuffing) attacks**.
 
 <Callout type="tip">
-**Example (synthetic identity):** a criminal combines a stolen child's unused SSN with a fake name and address, slowly builds a great credit score over years with small cards, then disappears after taking a huge loan ("bust-out" fraud).
+**Example (synthetic identity / "bust-out" fraud):** a criminal combines a stolen child's unused Aadhaar/SSN with a fake name and address, slowly builds an excellent credit score with small cards over years, then takes out a huge loan and disappears.
 </Callout>
 
-### Prevention
+### Prevention (for phishing and identity theft)
 
-Never share OTP/PIN/password · check website addresses carefully · use **two-factor authentication** · avoid unknown links · keep software/antivirus updated · use strong, **unique** passwords per site.
+- **Never share** OTP, PIN, password, or full card details with anyone — no genuine bank asks for them.
+- **Check the sender and the URL** carefully before clicking; look for spelling tricks and HTTPS.
+- Enable **two-factor / multi-factor authentication**.
+- Use **strong, unique passwords** per site (a password manager helps).
+- Keep antivirus, apps, and the OS **updated**; avoid unknown links and attachments.
+- Monitor bank and credit statements; report suspicious activity immediately.
 
 <Callout type="exam">
 **One-line answers**
 
-- **Phishing:** tricking people into revealing confidential data by pretending to be trustworthy.
-- **Spear phishing / whaling:** targeted phishing — whaling aims at top executives.
-- **Identity theft:** illegal use of another person's PII for fraud or impersonation.
-- **Synthetic identity:** a fake identity built from a mix of real and fabricated data.
-- **Typosquatting:** registering look-alike domain names to trap users.
+- **Phishing:** a social-engineering fraud where an attacker impersonates a trusted entity to steal confidential information.
+- **Spear phishing / whaling:** targeted phishing; whaling aims specifically at senior executives.
+- **Identity theft:** illegally acquiring and using another person's PII for fraud or impersonation.
+- **Synthetic identity:** a fake identity built by mixing real stolen data with fabricated data.
+- **Typosquatting:** registering look-alike domain names to trap users who mistype.
 </Callout>

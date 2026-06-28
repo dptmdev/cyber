@@ -12,106 +12,140 @@ import ProxyChain from '../../components/diagrams/ProxyChain.astro';
 import SqlInjection from '../../components/diagrams/SqlInjection.astro';
 import BufferOverflow from '../../components/diagrams/BufferOverflow.astro';
 
-This unit is about **how** attacks are carried out — explain both the *meaning* and the *purpose* of each tool.
+This unit is about the **specific tools and techniques** attackers use. For each one, a good answer explains **what it is, how it works, why criminals use it, an example, and how to defend against it.**
 
 ## Proxy servers
 
-**A proxy server is an intermediary between a user and the internet.** Legitimately it provides privacy and caching; criminals abuse it to **hide their real IP and location**.
+**A proxy server is an intermediary system that sits between a user's device and the internet, forwarding requests on the user's behalf.** Used legitimately it provides privacy, caching, and content filtering; abused by criminals it is a tool to **hide their real IP address and physical location**.
 
-- **Mechanism:** the target logs the *proxy's* IP, not the attacker's. Criminals **chain** several proxies across countries so tracing is nearly impossible.
-- **Purpose in crime:** anonymity, and bypassing geo-restrictions / IP whitelists.
+### How attackers use it
+
+When a criminal routes an attack through a proxy, the target's logs record the **proxy's IP address**, not the attacker's real one. To make tracing almost impossible, attackers **chain** several proxies across different countries, so each hop hides the previous one — law enforcement would have to unravel every link, often across legal jurisdictions.
 
 <ProxyChain />
 
+### Purpose in cybercrime
+
+- **Anonymity** — concealing identity and location during an attack.
+- **Bypassing restrictions** — slipping past firewalls, IP whitelists, or geo-blocks.
+
 <Callout type="tip">
-**Example:** a hacker in Russia routes through proxies in Brazil and Germany to attack a UK firm, making it look like the attack came from South America. A proxy isn't illegal in itself — it's suspicious only when used to hide crime.
+**Example:** a hacker in Russia routes through proxies in Brazil and Germany to attack a UK firm, making it look as if the attack came from South America. A proxy is **not illegal in itself** — it becomes suspicious only when used to conceal crime.
 </Callout>
 
 ## Password checking (cracking / guessing)
 
-**Automated methods that systematically guess or test credentials** to gain unauthorized access.
+**Password checking, technically called password cracking, is the use of automated methods to systematically guess or recover user credentials** in order to gain unauthorized access to an account or system.
 
-- **Brute-force** — try every possible combination until one works.
-- **Dictionary attack** — run through a pre-made list of common words and leaked passwords (`Password123`, `qwerty`).
-- **Credential stuffing** — replay username/password pairs stolen in one breach against other sites, exploiting **password reuse**.
+### Main methods
 
-It works because people pick weak passwords (names, dates) and reuse them.
+- **Brute-force attack** — automated software tries *every possible combination* of letters, numbers, and symbols until it finds the password. Guaranteed to work eventually, but slow against long passwords.
+- **Dictionary attack** — instead of every combination, the tool tries a prepared list of common words, names, and leaked passwords (`password123`, `qwerty`). Much faster because most people choose weak passwords.
+- **Credential stuffing** — taking username/password pairs **stolen in one breach** and automatically trying them on many other websites, exploiting the habit of **password reuse**.
+- **Rainbow-table attack** — using precomputed tables of hashes to reverse stolen password hashes quickly.
+
+### Why it works and how to defend
+
+It succeeds because people pick weak, reused passwords. Defences: **strong, unique passwords**, **multi-factor authentication (MFA)**, **account lockout** after failed attempts, **salting and hashing** of stored passwords, and rate-limiting login attempts.
 
 ## Random checking (vulnerability scanning / probing)
 
-**Sweeping a wide range of random IPs/networks** to find unpatched software, open ports, or weak settings — rather than targeting one company.
+**Random checking is an automated reconnaissance technique in which attackers sweep across large ranges of random IP addresses or networks, looking for unpatched software, open ports, or weak configurations.** Unlike a targeted attack, it is **opportunistic** — the attacker does not care *who* the victim is, only that a weakness exists.
 
-- **Mechanism:** automated scanners broadcast requests to random servers and flag whichever reply with an exploitable weakness.
-- **Significance:** it's the opening phase of *opportunistic* attacks like mass ransomware.
+### How it works
+
+Automated scanners broadcast requests to thousands of random servers and wait to see which ones respond with an exploitable weakness. Any vulnerable machine that replies is flagged for a follow-up exploit. This is the opening phase of mass attacks such as worm and **ransomware** outbreaks.
 
 <Callout type="tip">
-**Example:** a botnet scans thousands of servers for an outdated, vulnerable Apache version; any unpatched server that responds is queued for an exploit.
+**Example:** a botnet scans thousands of web servers for an outdated, vulnerable version of Apache; every unpatched server that responds is queued for an automatic exploit.
 </Callout>
 
 ## Trojan horses and backdoors
 
-- **Trojan horse** — malicious software **disguised as something legitimate** (a game, a free PDF reader). It needs the user to run it; it does **not** self-replicate like a virus.
-- **Backdoor** — a hidden way into a system that **bypasses normal authentication**, letting an attacker return later unnoticed.
+- **A Trojan horse is malicious software disguised as something legitimate and useful** (a game, a free PDF reader, a utility). It does **not** self-replicate like a virus — it depends on the user being tricked into running it.
+- **A backdoor is a hidden method of entering a system that bypasses normal authentication**, letting an attacker get in secretly and repeatedly.
 
-They work together: a backdoor is embedded inside a Trojan; installing the Trojan quietly opens the backdoor, allowing remote login, keylogging, or file theft at any time.
+### How they work together
+
+Attackers often **hide a backdoor inside a Trojan**. When the victim installs the "useful" software, the Trojan executes and quietly opens the backdoor. From then on the attacker can log in remotely at any time to upload more malware, log keystrokes, or steal files — **without the user's knowledge**, and even after the original vulnerability is patched.
 
 <Callout type="tip">
-**Example:** a free "utility" actually does its job *and* secretly opens network **Port 4444** (backdoor), giving an off-site attacker full remote control. Memory hook: a Trojan is a **gift that hides danger inside**.
+**Example:** a free "utility" really does its advertised job, but secretly opens network **Port 4444** (a backdoor), giving an off-site attacker full remote control of the desktop. Memory hook: a Trojan is a *gift that hides danger inside*.
 </Callout>
 
 ## DoS and DDoS attacks
 
-- **DoS (Denial of Service)** — make a machine/service unavailable to real users by **flooding it** with traffic or requests (e.g. SYN floods, HTTP floods) until RAM/bandwidth/CPU is exhausted.
-- **DDoS (Distributed DoS)** — the same goal launched from **thousands of compromised devices at once** (a **botnet**).
+- **A Denial-of-Service (DoS) attack tries to make a machine, website, or network unavailable to its legitimate users** by overwhelming it with traffic or requests so it slows down or crashes.
+- **A Distributed Denial-of-Service (DDoS) attack achieves the same goal but launches from many compromised devices at once** — a network of infected machines called a **botnet**.
+
+### How the attack works
+
+The target server is flooded with a huge volume of dummy traffic or malformed requests (for example **SYN floods** that leave half-open connections, or **HTTP floods** that hammer a web page). The server exhausts its **RAM, bandwidth, or CPU** and can no longer respond to real users.
 
 <DosVsDdos />
 
-**The difference:** DoS comes from one source (easy to block); DDoS comes from many sources worldwide (very hard to filter).
+### DoS vs DDoS
+
+A plain **DoS** comes from a **single source/IP**, so it is relatively easy to identify and block. A **DDoS** comes from **thousands of distributed machines worldwide**, so blocking one address does nothing — which makes it far harder to filter and far more powerful.
 
 <Callout type="danger">
-**Example:** a hacktivist botnet of millions of infected IoT devices (cameras, routers) floods an e-commerce site with billions of requests on Black Friday, crashing it and halting sales.
+**Example:** a hacktivist group uses a botnet of millions of infected IoT devices (smart cameras, routers) to flood an e-commerce site with billions of requests on Black Friday, crashing it and halting millions in sales.
 </Callout>
+
+**Defences:** firewalls and rate limiting, traffic filtering, content-delivery networks (CDNs), and specialised anti-DDoS / scrubbing services.
 
 ## SQL injection (SQLi)
 
-**Inserting malicious SQL code into a website's input fields** so the backend database runs unintended commands.
+**SQL injection is a code-injection attack in which the attacker inserts malicious SQL statements into a website's input fields, tricking the backend database into running unintended commands.** SQL is the language used to query databases (to fetch usernames, passwords, records); if user input is not checked, that input can be executed as **code** instead of treated as data.
 
-- **Mechanism:** if input isn't validated/sanitised, the attacker types database commands instead of normal text, and the database executes them as instructions.
-- **Impact:** bypass logins, read/alter confidential records, or dump the entire database (passwords, financial data).
-- **Prevention:** input validation, **parameterized queries**, least-privilege database accounts.
+### How it works
+
+If a website builds its database query by directly pasting in whatever the user typed, an attacker can type SQL commands instead of a normal value. The database cannot tell the difference and runs the injected code as a legitimate instruction.
 
 <SqlInjection />
 
+### Impact
+
+- Bypassing login/authentication.
+- Reading or altering confidential records.
+- **Dumping the entire database**, including passwords and financial data.
+- Deleting data or, in severe cases, taking over the server.
+
 <Callout type="tip">
-**Classic example:** entering `' OR '1'='1` in a login field. Because `1=1` is always true, the database is tricked into logging the attacker in without a valid password.
+**Classic example:** entering `' OR '1'='1` in a login field. Because `'1'='1'` is always true, the WHERE condition always passes, so the database authenticates the attacker **without a valid password**.
 </Callout>
+
+**Prevention:** **parameterized queries / prepared statements** (the key defence), strict **input validation**, escaping special characters, least-privilege database accounts, and web application firewalls.
 
 ## Buffer overflow
 
-**Writing more data into a memory buffer than it can hold**, so the excess spills into adjacent memory and overwrites legitimate code.
+**A buffer overflow occurs when a program writes more data into a fixed-size block of memory (a buffer) than that buffer was allocated to hold.** The extra data spills into the **adjacent memory**, corrupting or overwriting legitimate values — including, dangerously, the program's control information.
 
-- **Mechanism:** in memory-unsafe languages (C/C++) without strict bounds checking, oversized input leaks into the program's instruction pointers.
-- **Exploitation:** the attacker crafts the overflow to contain **shellcode**, forcing the program to run the attacker's code with its privileges.
-- **Prevention:** secure coding, input-size checks, memory-safe practices, and patching.
+### How it works and how it is exploited
+
+In memory-unsafe languages like **C and C++**, if the program does not check the size of input, an attacker can deliberately send input that is far too large. The overflow can overwrite the **return address / instruction pointer** that tells the CPU what to run next. The attacker carefully fills the overflow with malicious machine code called **shellcode**, so the program "jumps" to and executes the attacker's code — with the program's own privileges (often administrator/root).
 
 <BufferOverflow />
 
-<Callout type="tip">
-**Example:** a field expects an 8-character password; the attacker sends 500 carefully chosen characters that overwrite memory pointers and pop a command prompt with **admin privileges**.
-</Callout>
+### Why it is dangerous
+
+- Program crash and data corruption (loss of **Availability/Integrity**).
+- **Remote code execution** — the attacker runs arbitrary commands and can take full control.
+
+**Prevention:** secure coding with strict **bounds/input-size checking**, using memory-safe languages or safe library functions, compiler protections (stack canaries, ASLR, DEP/NX), and prompt patching.
 
 <Callout type="exam">
 **One-line summary table**
 
 | Term | Meaning | Attacker's purpose |
 | :-- | :-- | :-- |
-| Proxy server | Middle system that hides the real IP | Hide identity |
-| Password checking | Repeatedly testing passwords | Break into accounts |
-| Random checking | Scanning random hosts for weaknesses | Find easy targets |
-| Trojan horse | Fake-useful software with hidden harm | Sneak in malware |
-| Backdoor | Hidden access route | Re-enter later |
-| DoS | Flood from one source | Make service unavailable |
-| DDoS | Flood from a botnet | Overload & shut down |
-| SQL injection | Malicious SQL in inputs | Steal/alter database data |
-| Buffer overflow | Overrun memory limits | Crash or run code |
+| Proxy server | Intermediary that hides the real IP | Anonymity |
+| Password cracking | Automated guessing of credentials | Break into accounts |
+| Random checking | Scanning random hosts for weaknesses | Find easy victims |
+| Trojan horse | Disguised malware run by the user | Sneak in malware |
+| Backdoor | Hidden access route | Return secretly later |
+| DoS | Flood from one source | Make a service unavailable |
+| DDoS | Flood from a botnet (many sources) | Overwhelm & shut down |
+| SQL injection | Malicious SQL in input fields | Steal/alter database data |
+| Buffer overflow | Overrunning a memory buffer | Crash or run attacker code |
 </Callout>
